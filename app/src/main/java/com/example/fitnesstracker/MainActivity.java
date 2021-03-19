@@ -28,4 +28,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RecordWeightActivity.class);
         startActivity(intent);
     }
+
+    public void openStatsActivity(View view){
+        Intent intent = new Intent(this, ViewStatsActivity.class);
+        startActivity(intent);
+    }
 }

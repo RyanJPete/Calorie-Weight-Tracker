@@ -14,4 +14,9 @@ public class DayStats{
 
     @ColumnInfo(name = "weight")
     public int DayWeight;
+
+    public String printStats(){
+        String ret = "Date: " + String.valueOf(DayDate) + " Weight: " + String.valueOf(DayWeight);
+        return ret;
+    }
 }

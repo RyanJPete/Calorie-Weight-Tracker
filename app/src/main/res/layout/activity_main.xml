@@ -33,6 +33,7 @@
         android:id="@+id/statsbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="openStatsActivity"
         android:text="View Stats"
         app:layout_constraintBottom_toTopOf="@+id/editbtn"
         app:layout_constraintEnd_toEndOf="parent"
