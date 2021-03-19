@@ -1,6 +1,8 @@
 package com.example.fitnesstracker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Database;
@@ -11,6 +13,10 @@ import androidx.room.Query;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +33,10 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-public class RecordWeightActivity extends AppCompatActivity {
+
+
+public class RecordWeightActivity extends AppCompatActivity
+                                    implements checkDoubleEntry.checkDoubleEntryListener{
     AppDatabase db;
     DateDao DDao;
     List<DayStats> DStats;
@@ -47,14 +56,32 @@ public class RecordWeightActivity extends AppCompatActivity {
         TextView txt = findViewById(R.id.enterWeight);
 
         DateTime dT = DateTime.now();
-        int dInt = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
+        int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
 
+        if(DDao.getDateWeight(today) != 0) {
+            DayStats newEntry = new DayStats();
+            newEntry.DayDate = today;
+            newEntry.DayWeight = Integer.parseInt(txt.getText().toString());
+            DDao.insertWeight(newEntry);
+        }   else {
+            FragmentManager fm = getSupportFragmentManager();
+            DialogFragment dub = new checkDoubleEntry();
+            dub.show(fm, "VerifyDoubleup");
+        }
+    }
+
+    public void onDialogPositiveClick(DialogFragment dialog){
+        TextView txt = findViewById(R.id.enterWeight);
+        DateTime dT = DateTime.now();
+        int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
         DayStats newEntry = new DayStats();
-        newEntry.DayDate = dInt;
+        newEntry.DayDate = today;
         newEntry.DayWeight = Integer.parseInt(txt.getText().toString());
-        DDao.insertWeight(newEntry);
-        int hold = DDao.getDateWeight(dInt);
-        btn.setText(String.valueOf(hold));
+        newEntry.Fdate = DDao.getDateKey(today);
+        DDao.updateWeight(newEntry);
+    }
+
+    public void onDialogNegativeClick(DialogFragment dialog){
 
     }
 }
