@@ -15,6 +15,9 @@ public class DayStats{
     @ColumnInfo(name = "weight")
     public int DayWeight;
 
+    @ColumnInfo(name= "DayOfWeek")
+    public int DayOfWeek;
+
     public String printStats(){
         String formattedDate = formatDate(String.valueOf(DayDate));
         String ret = "Date: " + formattedDate + " Weight: " + String.valueOf(DayWeight);
@@ -27,7 +30,21 @@ public class DayStats{
             dayLen = 2;
         }
 
-        String ret = date.substring(0,dayLen) + "-" + date.substring(dayLen, dayLen + 2) + "-" + date.substring(dayLen + 2);
+        String ret = date.substring(0,dayLen) + "-" + date.substring(dayLen, dayLen + 2) + "-" +
+                date.substring(dayLen + 2 ) + " - " + toDayString(DayOfWeek);
         return ret;
+    }
+
+    public String toDayString(int dayInt){
+        switch(dayInt){
+            case 1: return "Monday";
+            case 2: return "Tuesday";
+            case 3: return "Wednesday";
+            case 4: return "Thursday";
+            case 5: return "Friday";
+            case 6: return "Saturday";
+            case 7: return "Sunday";
+            default: return "//error: invalid day of week - " + String.valueOf(dayInt) + "//";
+        }
     }
 }

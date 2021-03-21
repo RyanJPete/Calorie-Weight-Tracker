@@ -56,10 +56,12 @@ public class RecordWeightActivity extends AppCompatActivity
         TextView txt = findViewById(R.id.enterWeight);
 
         DateTime dT = DateTime.now();
+        int dayOfWeek = dT.getDayOfWeek();
         int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
         int tmp = DDao.getDateWeight(today);
         if(tmp == 0) {
             DayStats newEntry = new DayStats();
+            newEntry.DayOfWeek = dayOfWeek;
             newEntry.DayDate = today;
             newEntry.DayWeight = Integer.parseInt(txt.getText().toString());
             DDao.insertWeight(newEntry);
@@ -74,11 +76,17 @@ public class RecordWeightActivity extends AppCompatActivity
         TextView txt = findViewById(R.id.enterWeight);
         DateTime dT = DateTime.now();
         int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
+        int dayOfWeek = dT.getDayOfWeek();
         DayStats newEntry = new DayStats();
+        newEntry.DayOfWeek = dayOfWeek;
         newEntry.DayDate = today;
         newEntry.DayWeight = Integer.parseInt(txt.getText().toString());
         newEntry.Fdate = DDao.getDateKey(today);
         DDao.updateWeight(newEntry);
+    }
+
+    public void addWeight(){
+
     }
 
     public void onDialogNegativeClick(DialogFragment dialog){
