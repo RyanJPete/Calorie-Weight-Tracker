@@ -57,8 +57,8 @@ public class RecordWeightActivity extends AppCompatActivity
 
         DateTime dT = DateTime.now();
         int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
-
-        if(DDao.getDateWeight(today) != 0) {
+        int tmp = DDao.getDateWeight(today);
+        if(tmp == 0) {
             DayStats newEntry = new DayStats();
             newEntry.DayDate = today;
             newEntry.DayWeight = Integer.parseInt(txt.getText().toString());
