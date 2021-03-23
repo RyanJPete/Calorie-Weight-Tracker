@@ -32,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
     public void openStatsActivity(View view){
         Intent intent = new Intent(this, ViewStatsActivity.class);
         startActivity(intent);
+    }
 
+    public void openIngredientActivity(View view){
+        Intent intent = new Intent(this, AddIngredientActivity.class);
+        startActivity(intent);
+    }
+
+    public void openMealActivity(View view){
+        Intent intent = new Intent(this, AddMealActivity.class);
+        startActivity(intent);
     }
 }

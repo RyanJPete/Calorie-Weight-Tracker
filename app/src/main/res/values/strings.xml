@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FitnessTracker</string>
+    <string name="weightBtnTxt">Record Weight</string>
+    <string name="eatBtnTxt">Record Weight</string>
+    <string name="viewBtnTxt">View Stats</string>
+    <string name="ingBtnTxt">Add Ingredients</string>
+    <string name="mealBtnTxt">Add Meal</string>
+
 </resources>
