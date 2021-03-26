@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">FitnessTracker</string>
     <string name="weightBtnTxt">Record Weight</string>
-    <string name="eatBtnTxt">Record Weight</string>
+    <string name="eatBtnTxt">Eat Meal</string>
     <string name="viewBtnTxt">View Stats</string>
     <string name="ingBtnTxt">Add Ingredients</string>
+    <string name="nameTxtTxt">Enter Name</string>
+    <string name="calorieTxtTxt">Enter Calories</string>
+    <string name="carbTxtTxt">Enter Carbs</string>
+    <string name="fatTxtTxt">Enter Fat</string>
+    <string name="proteinTxtTxt">Enter Protein</string>
+    <string name="addIngredientBtnTxt">Add Ingredient</string>
     <string name="mealBtnTxt">Add Meal</string>
-
 </resources>
