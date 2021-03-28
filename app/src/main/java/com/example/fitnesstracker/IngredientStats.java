@@ -12,6 +12,9 @@ public class IngredientStats {
     @ColumnInfo(name = "name")
     public int iname;
 
+    @ColumnInfo(name = "calories")
+    public int icalories;
+
     @ColumnInfo(name = "fat")
     public int ifat;
 

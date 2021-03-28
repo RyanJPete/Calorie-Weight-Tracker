@@ -12,6 +12,9 @@ public class MealStats {
     @ColumnInfo(name = "name")
     public int mname;
 
+    @ColumnInfo(name = "calories")
+    public int icalories;
+
     @ColumnInfo(name = "fat")
     public int mfat;
 
