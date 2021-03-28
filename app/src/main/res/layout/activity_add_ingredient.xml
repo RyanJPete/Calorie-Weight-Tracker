@@ -12,9 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/nameTxtTxt"
-        app:layout_constraintBottom_toTopOf="@+id/calorieTxt"
+        app:layout_constraintBottom_toTopOf="@+id/gramsTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,14 +22,14 @@
         android:id="@+id/calorieTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:ems="10"
         android:inputType="number"
-        android:text="@string/calorieTxtTxt"
+        android:onClick="clearTextBox"
         app:layout_constraintBottom_toTopOf="@+id/fatTxt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/gramsTxt" />
 
     <EditText
         android:id="@+id/fatTxt"
@@ -39,7 +37,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/fatTxtTxt"
         app:layout_constraintBottom_toTopOf="@+id/carbTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -52,7 +49,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/carbTxtTxt"
         app:layout_constraintBottom_toTopOf="@+id/proteinTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -65,7 +61,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/proteinTxtTxt"
         app:layout_constraintBottom_toTopOf="@+id/addIngredientBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -76,6 +71,7 @@
         android:id="@+id/addIngredientBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="ingredientBtnClick"
         android:text="@string/addIngredientBtnTxt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,4 +79,70 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/proteinTxt"
         app:layout_constraintVertical_bias="0.346" />
+
+    <EditText
+        android:id="@+id/gramsTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/calorieTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTxt" />
+
+    <TextView
+        android:id="@+id/nameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nameTxtTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/nameTxt"
+        app:layout_constraintEnd_toStartOf="@+id/nameTxt"
+        app:layout_constraintTop_toTopOf="@+id/nameTxt" />
+
+    <TextView
+        android:id="@+id/gramLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gramTxtTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/gramsTxt"
+        app:layout_constraintEnd_toStartOf="@+id/gramsTxt"
+        app:layout_constraintTop_toTopOf="@+id/gramsTxt" />
+
+    <TextView
+        android:id="@+id/calorieLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/calorieTxtTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/calorieTxt"
+        app:layout_constraintEnd_toStartOf="@+id/calorieTxt"
+        app:layout_constraintTop_toTopOf="@+id/calorieTxt" />
+
+    <TextView
+        android:id="@+id/fatLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fatTxtTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/fatTxt"
+        app:layout_constraintEnd_toStartOf="@+id/fatTxt"
+        app:layout_constraintTop_toTopOf="@+id/fatTxt" />
+
+    <TextView
+        android:id="@+id/carbLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/carbTxtTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/carbTxt"
+        app:layout_constraintEnd_toStartOf="@+id/carbTxt"
+        app:layout_constraintTop_toTopOf="@+id/carbTxt" />
+
+    <TextView
+        android:id="@+id/proteinLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/proteinTxtTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/proteinTxt"
+        app:layout_constraintEnd_toStartOf="@+id/proteinTxt"
+        app:layout_constraintTop_toTopOf="@+id/proteinTxt" />
 </androidx.constraintlayout.widget.ConstraintLayout>
