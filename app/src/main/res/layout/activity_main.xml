@@ -22,6 +22,7 @@
         android:id="@+id/eatbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="openEatActivity"
         android:text="@string/eatBtnTxt"
         app:layout_constraintBottom_toTopOf="@+id/statsbtn"
         app:layout_constraintEnd_toEndOf="parent"
