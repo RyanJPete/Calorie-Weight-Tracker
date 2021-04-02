@@ -59,13 +59,19 @@ public class RecordWeightActivity extends AppCompatActivity
         int dayOfWeek = dT.getDayOfWeek();
         int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
         int tmp = DDao.getDateWeight(today);
-        if(tmp == 0) {
-            DayStats newEntry = new DayStats();
+        DayStats newEntry = new DayStats();
+        if(tmp == 0) {  //No entry has been made for today
             newEntry.DayOfWeek = dayOfWeek;
             newEntry.DayDate = today;
             newEntry.DayWeight = Integer.parseInt(txt.getText().toString());
+            newEntry.DayCalories = 0;
+            newEntry.DayFat = 0;
+            newEntry.DayCarbs = 0;
+            newEntry.DayProtein = 0;
             DDao.insertWeight(newEntry);
-        }   else {
+        }   else if(DDao.getDateCalories(today) != 0){  //an entry has been made to add calories but not weight
+            DDao.updateWeight(newEntry);
+        } else {
             FragmentManager fm = getSupportFragmentManager();
             DialogFragment dub = new checkDoubleEntry();
             dub.show(fm, "VerifyDoubleup");

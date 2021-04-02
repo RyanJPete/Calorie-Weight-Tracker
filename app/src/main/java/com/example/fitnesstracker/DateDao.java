@@ -16,6 +16,9 @@ public interface DateDao{
     @Query("SELECT DayStats.weight FROM daystats WHERE DayStats.day = :day")
     public int getDateWeight(int day);
 
+    @Query("SELECT DayStats.calories FROM daystats WHERE DayStats.day = :day")
+    public int getDateCalories(int day);
+
     @Query("SELECT DayStats.Fdate FROM DayStats WHERE DayStats.day = :day")
     public int getDateKey(int day);
 

@@ -18,9 +18,23 @@ public class DayStats{
     @ColumnInfo(name= "DayOfWeek")
     public int DayOfWeek;
 
+    @ColumnInfo(name= "calories")
+    public int DayCalories;
+
+    @ColumnInfo(name= "fat")
+    public int DayFat;
+
+    @ColumnInfo(name= "carbs")
+    public int DayCarbs;
+
+    @ColumnInfo(name= "protein")
+    public int DayProtein;
+
     public String printStats(){
         String formattedDate = formatDate(String.valueOf(DayDate));
-        String ret = "Date: " + formattedDate + " Weight: " + String.valueOf(DayWeight);
+        String ret = "Date: " + formattedDate + ", Weight: " + String.valueOf(DayWeight) +
+                ", Calories: " + String.valueOf(DayCalories) + ", Fat: " + String.valueOf(DayFat) +
+                ", Carbs: " + String.valueOf(DayCarbs) + ", Protein: " + String.valueOf(DayProtein);
         return ret;
     }
 
