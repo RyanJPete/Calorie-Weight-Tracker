@@ -70,12 +70,14 @@ public class RecordWeightActivity extends AppCompatActivity
             newEntry.DayCarbs = 0;
             newEntry.DayProtein = 0;
             DDao.insertWeight(newEntry);
-        }   else if(caloriesEntered != 0){  //an entry has been made to add calories but not weight
-            DDao.updateWeight(Integer.parseInt(txt.getText().toString()), today);
-        } else {
+        } else if(weightEntered != 0){  //Weight has already been recorded today
             FragmentManager fm = getSupportFragmentManager();
             DialogFragment dub = new checkDoubleEntry();
             dub.show(fm, "VerifyDoubleup");
+        } else if(caloriesEntered != 0){  //an entry has been made to add calories but not weight
+            DDao.updateWeight(Integer.parseInt(txt.getText().toString()), today);
+        } else {
+
         }
     }
 
