@@ -58,14 +58,14 @@ public class RecordWeightActivity extends AppCompatActivity
         DateTime dT = DateTime.now();
         int dayOfWeek = dT.getDayOfWeek();
         int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
-        int tmp = DDao.getDateWeight(today);
+        int weightEntered = DDao.getDateWeight(today);
         DayStats newEntry = new DayStats();
         int caloriesEntered = DDao.getDateCalories(today);
-        if(tmp == 0) {  //No entry has been made for today
+        if(weightEntered == 0 && caloriesEntered == 0) {  //No entry has been made for today
             newEntry.DayOfWeek = dayOfWeek;
             newEntry.DayDate = today;
             newEntry.DayWeight = Integer.parseInt(txt.getText().toString());
-            newEntry.DayCalories = caloriesEntered;
+            newEntry.DayCalories = 0;
             newEntry.DayFat = 0;
             newEntry.DayCarbs = 0;
             newEntry.DayProtein = 0;
