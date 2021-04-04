@@ -10,7 +10,7 @@ public class IngredientStats {
     public int key;
 
     @ColumnInfo(name = "name")
-    public int iname;
+    public String iname;
 
     @ColumnInfo(name = "calories")
     public int icalories;

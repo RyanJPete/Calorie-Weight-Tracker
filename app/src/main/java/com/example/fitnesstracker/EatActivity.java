@@ -7,7 +7,10 @@ import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
@@ -17,6 +20,7 @@ import java.util.List;
 public class EatActivity extends AppCompatActivity {
     AppDatabase db;
     DateDao DDao;
+    IngredientDao IDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +29,34 @@ public class EatActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "dateDatabase").allowMainThreadQueries().build();    //TODO remove allowMainThreadQueries, for testing purposeds only, do asynk task
         DDao = db.DayStats();
+        IDao = db.IngredientStats();
+
+        Spinner ingredients = findViewById(R.id.ingredientDropdown);
+
+        List<String> ingredientList = IDao.getNames();
+        List<IngredientStats> stats = IDao.getAll();
+        String[] ingredientArray = ingredientList.toArray(new String[0]);
+        List<DayStats> dstats = DDao.getAll();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, ingredientArray);
+
+        ingredients.setAdapter(adapter);
+
+        ingredients.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void eat (View view){
-        TextView txt = findViewById(R.id.eatTxt);
+    /*    TextView txt = findViewById(R.id.eatTxt);
 
         DateTime dT = DateTime.now();
         int dayOfWeek = dT.getDayOfWeek();
@@ -57,6 +85,6 @@ public class EatActivity extends AppCompatActivity {
         txt.setText(String.valueOf(DDao.getDateCalories(today)));
         } catch(Exception e){
             System.out.println(e);
-        }
+        }*/
     }
 }
