@@ -50,7 +50,7 @@ public class EatActivity extends AppCompatActivity {
             } else {  //an entry has been made to add weight but not calories
                 newEntry.Fdate = DDao.getDateKey(today);
 
-                DDao.updateWeight(newEntry);
+                DDao.updateNutrition(Integer.parseInt(txt.getText().toString()) + caloriesEntered, 0, 0, 0, today);
             }
 
         txt = findViewById(R.id.eatOutput);

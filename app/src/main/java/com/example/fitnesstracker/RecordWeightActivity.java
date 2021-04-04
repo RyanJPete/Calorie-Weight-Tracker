@@ -70,8 +70,8 @@ public class RecordWeightActivity extends AppCompatActivity
             newEntry.DayCarbs = 0;
             newEntry.DayProtein = 0;
             DDao.insertWeight(newEntry);
-        }   else if(DDao.getDateCalories(today) != 0){  //an entry has been made to add calories but not weight
-            DDao.updateWeight(newEntry);
+        }   else if(caloriesEntered != 0){  //an entry has been made to add calories but not weight
+            DDao.updateWeight(Integer.parseInt(txt.getText().toString()), today);
         } else {
             FragmentManager fm = getSupportFragmentManager();
             DialogFragment dub = new checkDoubleEntry();
@@ -81,15 +81,10 @@ public class RecordWeightActivity extends AppCompatActivity
 
     public void onDialogPositiveClick(DialogFragment dialog){
         TextView txt = findViewById(R.id.enterWeight);
+        int weight = Integer.parseInt(txt.getText().toString());
         DateTime dT = DateTime.now();
         int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
-        int dayOfWeek = dT.getDayOfWeek();
-        DayStats newEntry = new DayStats();
-        newEntry.DayOfWeek = dayOfWeek;
-        newEntry.DayDate = today;
-        newEntry.DayWeight = Integer.parseInt(txt.getText().toString());
-        newEntry.Fdate = DDao.getDateKey(today);
-        DDao.updateWeight(newEntry);
+        DDao.updateWeight(weight, today);
     }
 
     public void addWeight(){
