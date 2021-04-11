@@ -44,8 +44,10 @@ public class EatActivity extends AppCompatActivity {
 
         ingredients.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                String selection = parent.getItemAtPosition(pos).toString();
+                TextView txt = findViewById(R.id.totalCalories);
+                txt.setText(selection);
             }
 
             @Override
