@@ -11,6 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/totalCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/eatBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eat" />
+
         <Spinner
             android:id="@+id/mealDropdown"
             android:layout_width="409dp"
@@ -29,18 +41,6 @@
             android:layout_height="581dp"
             android:layout_marginTop="2dp"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/totalCalories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-
-            <Button
-                android:id="@+id/eatBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Eat" />
 
         </LinearLayout>
     </LinearLayout>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,12 +43,18 @@ public class EatActivity extends AppCompatActivity {
 
         ingredients.setAdapter(adapter);
 
+        ingredients.setSelection(0,false);
         ingredients.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selection = parent.getItemAtPosition(pos).toString();
                 TextView txt = findViewById(R.id.totalCalories);
                 txt.setText(selection);
+
+                TextView inputBox = new TextView(getApplicationContext());
+                inputBox.setText(selection);
+                LinearLayout eatLayout = (LinearLayout)findViewById(R.id.eatLayout);
+                eatLayout.addView(inputBox);
             }
 
             @Override
