@@ -19,6 +19,8 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+
 public class EatActivity extends AppCompatActivity {
     AppDatabase db;
     DateDao DDao;
@@ -49,8 +51,6 @@ public class EatActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selection = parent.getItemAtPosition(pos).toString();
-                TextView txt = findViewById(R.id.totalCalories);
-                txt.setText(selection);
                 LinearLayout eatLayout = (LinearLayout)findViewById(R.id.eatLayout);
 
                 LinearLayout ingredientLayout = new LinearLayout(getApplicationContext());     //set up horizontal layout to add to vertical layout
@@ -62,6 +62,17 @@ public class EatActivity extends AppCompatActivity {
                 ingredientLayout.addView(ingredientName);
 
                 EditText inputBox = new EditText((getApplicationContext()));
+                inputBox.setInputType(TYPE_CLASS_NUMBER);
+                inputBox.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        TextView txt = findViewById(R.id.totalCalories);
+                        int calories = Integer.parseInt(txt.getText().toString());
+                        TextView input = (TextView) v;
+                        calories += Integer.parseInt(input.getText().toString());
+                        txt.setText(String.valueOf(calories));
+                    }
+                });
                 ingredientLayout.addView(inputBox);
 
                 eatLayout.addView(ingredientLayout);
