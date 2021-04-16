@@ -40,9 +40,7 @@
             android:layout_width="409dp"
             android:layout_height="581dp"
             android:layout_marginTop="2dp"
-            android:orientation="vertical">
-
-        </LinearLayout>
+            android:orientation="vertical"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

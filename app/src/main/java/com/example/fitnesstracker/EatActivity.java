@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,7 +37,7 @@ public class EatActivity extends AppCompatActivity {
 
         List<String> ingredientList = IDao.getNames();
         List<IngredientStats> stats = IDao.getAll();
-        String[] ingredientArray = ingredientList.toArray(new String[0]);
+        final String[] ingredientArray = ingredientList.toArray(new String[0]);
         List<DayStats> dstats = DDao.getAll();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, ingredientArray);
@@ -50,11 +51,20 @@ public class EatActivity extends AppCompatActivity {
                 String selection = parent.getItemAtPosition(pos).toString();
                 TextView txt = findViewById(R.id.totalCalories);
                 txt.setText(selection);
-
-                TextView inputBox = new TextView(getApplicationContext());
-                inputBox.setText(selection);
                 LinearLayout eatLayout = (LinearLayout)findViewById(R.id.eatLayout);
-                eatLayout.addView(inputBox);
+
+                LinearLayout ingredientLayout = new LinearLayout(getApplicationContext());     //set up horizontal layout to add to vertical layout
+                ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
+                ingredientLayout.setGravity(1);
+
+                TextView ingredientName = new TextView(getApplicationContext());
+                ingredientName.setText(selection + ":");
+                ingredientLayout.addView(ingredientName);
+
+                EditText inputBox = new EditText((getApplicationContext()));
+                ingredientLayout.addView(inputBox);
+
+                eatLayout.addView(ingredientLayout);
             }
 
             @Override
