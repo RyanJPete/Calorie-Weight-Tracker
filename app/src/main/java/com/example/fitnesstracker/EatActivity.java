@@ -43,6 +43,7 @@ public class EatActivity extends AppCompatActivity {
         Spinner ingredients = findViewById(R.id.ingredientDropdown);
 
         List<String> ingredientList = IDao.getNames();
+        ingredientList.add(0,"Choose Ingredient");
         List<IngredientStats> stats = IDao.getAll();
         final String[] ingredientArray = ingredientList.toArray(new String[0]);
         List<DayStats> dstats = DDao.getAll();
@@ -56,6 +57,9 @@ public class EatActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selection = parent.getItemAtPosition(pos).toString();
+                if(selection.equals("Choose Ingredient")){      //stops creation of ingredient entry on default value
+                    return;
+                }
                 LinearLayout eatLayout = (LinearLayout)findViewById(R.id.eatLayout);
 
                 LinearLayout ingredientLayout = new LinearLayout(getApplicationContext());     //set up horizontal layout to add to vertical layout
