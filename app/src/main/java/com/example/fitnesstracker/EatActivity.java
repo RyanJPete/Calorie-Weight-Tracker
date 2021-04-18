@@ -17,7 +17,10 @@ import android.widget.TextView;
 
 import org.joda.time.DateTime;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
 
@@ -25,6 +28,7 @@ public class EatActivity extends AppCompatActivity {
     AppDatabase db;
     DateDao DDao;
     IngredientDao IDao;
+    Map<EditText, Integer> foodCaloriesMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class EatActivity extends AppCompatActivity {
                 AppDatabase.class, "dateDatabase").allowMainThreadQueries().build();    //TODO remove allowMainThreadQueries, for testing purposeds only, do asynk task
         DDao = db.DayStats();
         IDao = db.IngredientStats();
+        foodCaloriesMap = new HashMap<EditText, Integer>();
 
         Spinner ingredients = findViewById(R.id.ingredientDropdown);
 
@@ -68,12 +73,15 @@ public class EatActivity extends AppCompatActivity {
                     public void onClick(View v){
                         TextView txt = findViewById(R.id.totalCalories);
                         int calories = Integer.parseInt(txt.getText().toString());
+                        int vCalories = foodCaloriesMap.get(v);
                         TextView input = (TextView) v;
-                        calories += Integer.parseInt(input.getText().toString());
+                        calories += Integer.parseInt(input.getText().toString())*vCalories;
                         txt.setText(String.valueOf(calories));
                     }
                 });
                 ingredientLayout.addView(inputBox);
+                Integer selectionCalories = IDao.getCalories(selection);
+                foodCaloriesMap.put(inputBox, selectionCalories);
 
                 eatLayout.addView(ingredientLayout);
             }
