@@ -10,7 +10,7 @@ public class MealStats {
     public int key;
 
     @ColumnInfo(name = "name")
-    public int mname;
+    public String mname;
 
     @ColumnInfo(name = "calories")
     public int icalories;

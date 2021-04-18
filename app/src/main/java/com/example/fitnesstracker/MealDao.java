@@ -12,6 +12,12 @@ public interface MealDao {
     @Query("SELECT * FROM mealstats")
     List<MealStats> getAll();
 
+    @Query("SELECT name FROM mealstats")
+    List<String> getNames();
+
+    @Query(("SELECT calories FROM mealstats WHERE mealstats.name =:name"))
+    public int getCalories(String name);
+
     @Insert
     void insertAll(MealStats... mstat);
 
