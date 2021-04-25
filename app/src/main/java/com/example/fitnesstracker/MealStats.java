@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity
 public class MealStats {
     @PrimaryKey(autoGenerate = true)
@@ -12,15 +14,6 @@ public class MealStats {
     @ColumnInfo(name = "name")
     public String mname;
 
-    @ColumnInfo(name = "calories")
-    public int icalories;
-
-    @ColumnInfo(name = "fat")
-    public int mfat;
-
-    @ColumnInfo(name = "carbs")
-    public int mcarbs;
-
-    @ColumnInfo(name = "protein")
-    public int mprotein;
+    @ColumnInfo(name = "ingredientList")
+    public List<IngredientStats> ingredientList;
 }

@@ -21,6 +21,7 @@ public class AddMealActivity extends AppCompatActivity {
     DateDao DDao;
     IngredientDao IDao;
     MealDao MDao;
+    int numIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class AddMealActivity extends AppCompatActivity {
         DDao = db.DayStats();
         IDao = db.IngredientStats();
         MDao = db.MealStats();
+        numIngredients = 0;
 
         Spinner ingredientPicker = findViewById(R.id.ingredientDropdownMeal);
 
@@ -68,6 +70,7 @@ public class AddMealActivity extends AppCompatActivity {
                     ingredientLayout.addView(inputBox);
 
                     mealLayout.addView(ingredientLayout);
+                    numIngredients++;
             }
 
             @Override
@@ -75,5 +78,19 @@ public class AddMealActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void addMeal(View view){
+        LinearLayout mealLayout = findViewById(R.id.mealLayout);
+        int count = mealLayout.getChildCount();
+        LinearLayout v = null;
+
+        MealStats newMeal = new MealStats();
+
+        for(int i = 0; i < count; i++){
+            v = (LinearLayout)mealLayout.getChildAt(i);
+            TextView ingredientName = (TextView)v.getChildAt(0);
+            EditText ingredientQTY = (EditText) v.getChildAt(1);
+        }
     }
 }

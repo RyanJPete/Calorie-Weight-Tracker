@@ -11,5 +11,5 @@
     <string name="fatTxtTxt">Enter Fat</string>
     <string name="proteinTxtTxt">Enter Protein</string>
     <string name="addIngredientBtnTxt">Add Ingredient</string>
-    <string name="mealBtnTxt">Add Meal</string>
+    <string name="addMealBtnTxt">Add Meal</string>
 </resources>
