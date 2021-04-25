@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;

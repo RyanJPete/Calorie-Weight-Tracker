@@ -12,6 +12,9 @@ public interface IngredientDao {
     @Query("SELECT * FROM ingredientstats")
     List<IngredientStats> getAll();
 
+    @Query("SELECT * FROM ingredientstats WHERE ingredientstats.`key` =:key")
+    IngredientStats getByKey(int key);
+
     @Query("SELECT name FROM ingredientstats")
     List<String> getNames();
 

@@ -9,14 +9,17 @@ import java.util.List;
 
 @Dao
 public interface MealDao {
+    @Query("DELETE FROM mealstats")
+    void clearMeals();
+
     @Query("SELECT * FROM mealstats")
     List<MealStats> getAll();
 
     @Query("SELECT name FROM mealstats")
     List<String> getNames();
 
-    @Query(("SELECT calories FROM mealstats WHERE mealstats.name =:name"))
-    public int getCalories(String name);
+    @Query("SELECT * FROM mealstats WHERE mealstats.name = :name")
+    MealStats getByName(String name);
 
     @Insert
     void insertAll(MealStats... mstat);
