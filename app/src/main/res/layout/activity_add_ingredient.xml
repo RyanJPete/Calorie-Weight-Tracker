@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/addMealBtn"
+        app:layout_constraintBottom_toTopOf="@+id/portionText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +76,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/proteinTxt"
+        app:layout_constraintTop_toBottomOf="@+id/portionText"
         app:layout_constraintVertical_bias="0.346" />
 
     <EditText
@@ -144,4 +144,30 @@
         app:layout_constraintBottom_toBottomOf="@+id/proteinTxt"
         app:layout_constraintEnd_toStartOf="@+id/proteinTxt"
         app:layout_constraintTop_toTopOf="@+id/proteinTxt" />
+
+    <EditText
+        android:id="@+id/portionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/addMealBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/proteinTxt" />
+
+    <TextView
+        android:id="@+id/portionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Enter Portion Type"
+        app:layout_constraintBottom_toBottomOf="@+id/portionText"
+        app:layout_constraintEnd_toStartOf="@+id/portionText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/portionText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

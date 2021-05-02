@@ -5,6 +5,7 @@ import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class AddIngredientActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "dateDatabase").allowMainThreadQueries().build();
         IDao = db.IngredientStats();
+        EditText inputTxt = findViewById(R.id.portionText);
+        inputTxt.setText("gram");
     }
 
     public void ingredientBtnClick(View view){
@@ -44,6 +47,8 @@ public class AddIngredientActivity extends AppCompatActivity {
             newEntry.icarbs = Integer.parseInt(inputTxt.getText().toString()) / grams;
             inputTxt = findViewById(R.id.proteinTxt);
             newEntry.iprotein = Integer.parseInt(inputTxt.getText().toString()) / grams;
+            inputTxt = findViewById(R.id.portionText);
+            newEntry.iportion = inputTxt.getText().toString();
             IDao.insertIngredient(newEntry);
         List<IngredientStats> tmp = IDao.getAll();
         grams++;

@@ -23,4 +23,7 @@ public class IngredientStats {
 
     @ColumnInfo(name = "protein")
     public int iprotein;
+
+    @ColumnInfo(name = "portionType")
+    public String iportion;
 }
