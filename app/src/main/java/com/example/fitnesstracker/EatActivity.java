@@ -40,6 +40,10 @@ public class EatActivity extends AppCompatActivity {
         IDao = db.IngredientStats();
         foodCaloriesMap = new HashMap<EditText, Integer>();
 
+        setupIngredientSpinner();
+    }
+
+    private void setupIngredientSpinner(){
         Spinner ingredients = findViewById(R.id.ingredientDropdown);
 
         List<String> ingredientList = IDao.getNames();
