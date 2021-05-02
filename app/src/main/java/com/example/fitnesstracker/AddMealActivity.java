@@ -36,6 +36,10 @@ public class AddMealActivity extends AppCompatActivity {
         MDao = db.MealStats();
         numIngredients = 0;
 
+        setupIngredientSpinner();
+    }
+
+    private void setupIngredientSpinner(){
         Spinner ingredientPicker = findViewById(R.id.ingredientDropdownMeal);
 
         List<String> ingredientList = IDao.getNames();
@@ -51,27 +55,27 @@ public class AddMealActivity extends AppCompatActivity {
         ingredientPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                    String selection = parent.getItemAtPosition(pos).toString();
-                    if (selection.equals("Choose Ingredient")) {      //stops creation of ingredient entry on default value
-                        return;
-                    }
-                    LinearLayout mealLayout = (LinearLayout) findViewById(R.id.mealLayout);
+                String selection = parent.getItemAtPosition(pos).toString();
+                if (selection.equals("Choose Ingredient")) {      //stops creation of ingredient entry on default value
+                    return;
+                }
+                LinearLayout mealLayout = (LinearLayout) findViewById(R.id.mealLayout);
 
-                    LinearLayout ingredientLayout = new LinearLayout(getApplicationContext());     //set up horizontal layout to add to vertical layout
-                    ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    ingredientLayout.setGravity(1);
+                LinearLayout ingredientLayout = new LinearLayout(getApplicationContext());     //set up horizontal layout to add to vertical layout
+                ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
+                ingredientLayout.setGravity(1);
 
-                    TextView ingredientName = new TextView(getApplicationContext());
-                    ingredientName.setText(selection + ":");
-                    ingredientLayout.addView(ingredientName);
+                TextView ingredientName = new TextView(getApplicationContext());
+                ingredientName.setText(selection + ":");
+                ingredientLayout.addView(ingredientName);
 
-                    EditText inputBox = new EditText((getApplicationContext()));
-                    inputBox.setInputType(TYPE_CLASS_NUMBER);
+                EditText inputBox = new EditText((getApplicationContext()));
+                inputBox.setInputType(TYPE_CLASS_NUMBER);
 
-                    ingredientLayout.addView(inputBox);
+                ingredientLayout.addView(inputBox);
 
-                    mealLayout.addView(ingredientLayout);
-                    numIngredients++;
+                mealLayout.addView(ingredientLayout);
+                numIngredients++;
             }
 
             @Override
