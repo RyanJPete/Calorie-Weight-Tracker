@@ -25,8 +25,8 @@ public interface MealDao {
     void insertAll(MealStats... mstat);
 
     @Insert
-    void insertIngrerdient(MealStats mstat);
+    void insertMeal(MealStats mstat);
 
     @Update
-    public void updateIngredient(MealStats mstat);
+    public void updateMeal(MealStats mstat);
 }

@@ -21,6 +21,8 @@ public interface IngredientDao {
     @Query(("SELECT calories FROM ingredientstats WHERE ingredientstats.name =:name"))
     public int getCalories(String name);
 
+    @Query(("SELECT * FROM ingredientstats WHERE ingredientstats.name =:name"))
+    public IngredientStats getByName(String name);
 
     @Insert
     void insertAll(IngredientStats... istat);

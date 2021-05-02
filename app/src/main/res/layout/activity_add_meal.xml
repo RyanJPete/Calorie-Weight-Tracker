@@ -27,6 +27,29 @@
         app:layout_constraintBottom_toTopOf="@+id/addMealBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/mealNameTxt"
+        android:layout_width="244dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/mealLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addMealBtn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meal Name"
+        app:layout_constraintBottom_toBottomOf="@+id/mealNameTxt"
+        app:layout_constraintEnd_toStartOf="@+id/mealNameTxt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addMealBtn" />
+
     <LinearLayout
         android:id="@+id/mealLayout"
         android:layout_width="match_parent"
@@ -34,5 +57,7 @@
         android:layout_marginTop="152dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addMealBtn"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/addMealBtn">
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
