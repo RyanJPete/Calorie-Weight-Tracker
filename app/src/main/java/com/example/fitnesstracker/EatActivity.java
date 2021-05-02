@@ -27,6 +27,7 @@ import static android.text.InputType.TYPE_CLASS_NUMBER;
 public class EatActivity extends AppCompatActivity {
     AppDatabase db;
     DateDao DDao;
+    MealDao MDao;
     IngredientDao IDao;
     Map<EditText, Integer> foodCaloriesMap;
 
@@ -38,9 +39,41 @@ public class EatActivity extends AppCompatActivity {
                 AppDatabase.class, "dateDatabase").allowMainThreadQueries().build();    //TODO remove allowMainThreadQueries, for testing purposeds only, do asynk task
         DDao = db.DayStats();
         IDao = db.IngredientStats();
+        MDao = db.MealStats();
         foodCaloriesMap = new HashMap<EditText, Integer>();
 
         setupIngredientSpinner();
+        setupMealSpinner();
+    }
+
+    private void setupMealSpinner(){
+        Spinner meals = findViewById(R.id.mealDropdown);
+
+        List<String> mealList = MDao.getNames();
+        mealList.add(0,"Choose Meal");
+        List<MealStats> stats = MDao.getAll();
+        final String[] mealArray = mealList.toArray(new String[0]);
+        List<DayStats> dstats = DDao.getAll();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, mealArray);
+
+        meals.setAdapter(adapter);
+
+        //ingredients.setSelection(0,false);
+        meals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                String selection = parent.getItemAtPosition(pos).toString();
+                if(selection.equals("Choose Meal")){      //stops creation of ingredient entry on default value
+                    return;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void setupIngredientSpinner(){
