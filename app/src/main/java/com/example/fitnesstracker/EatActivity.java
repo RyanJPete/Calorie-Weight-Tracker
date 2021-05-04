@@ -16,8 +16,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -66,6 +68,44 @@ public class EatActivity extends AppCompatActivity {
                 String selection = parent.getItemAtPosition(pos).toString();
                 if(selection.equals("Choose Meal")){      //stops creation of ingredient entry on default value
                     return;
+                }
+
+                LinearLayout eatLayout = findViewById(R.id.eatLayout);
+
+                LinkedList<IngredientStats> ingredientList = (LinkedList<IngredientStats>) MDao.getByName(selection).ingredientList;
+
+                for(int x = 0; x < ingredientList.size(); x++){
+                    LinearLayout ingredientLayout = new LinearLayout(getApplicationContext());     //set up horizontal layout to add to vertical layout
+                    ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    ingredientLayout.setGravity(1);
+
+                    String iName = ingredientList.get(x).iname;
+                    TextView ingredientName = new TextView(getApplicationContext());
+                    ingredientName.setText(iName + ":");
+                    ingredientLayout.addView(ingredientName);
+
+                    EditText inputBox = new EditText((getApplicationContext()));
+                    inputBox.setInputType(TYPE_CLASS_NUMBER);
+                    inputBox.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v){
+                            TextView txt = findViewById(R.id.totalCalories);
+                            int calories = Integer.parseInt(txt.getText().toString());
+                            int vCalories = foodCaloriesMap.get(v);
+                            TextView input = (TextView) v;
+                            calories += Integer.parseInt(input.getText().toString())*vCalories;
+                            txt.setText(String.valueOf(calories));
+                        }
+                    });
+                    try {
+                        ingredientLayout.addView(inputBox);
+                        Integer selectionCalories = IDao.getCalories(selection);
+                        foodCaloriesMap.put(inputBox, selectionCalories);
+                        eatLayout.addView(ingredientLayout);
+                    }catch (Exception e){
+                        System.out.print(e);
+                    }
+
                 }
             }
 
