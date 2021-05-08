@@ -42,7 +42,11 @@ public class ViewStatsActivity extends AppCompatActivity {
                 daysRecorded++;
             }
         }
-        txt.setText("This Weeks Average Weight is: " + weeklyTotal/dayOfWeek);
+        if(dayOfWeek > 0) {
+            txt.setText("This Weeks Average Weight is: " + weeklyTotal / dayOfWeek);
+        } else {
+            txt.setText("No weight this week");
+        }
     }
 
     public  int todayMinusX(int today, int x){
