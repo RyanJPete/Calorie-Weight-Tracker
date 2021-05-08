@@ -38,7 +38,7 @@ public class Converters {
 
             matcher2.find();
             String temp = matcher2.group();
-            temp = temp.substring(1,temp.length() - 1);
+            temp = temp.substring(0,temp.length() - 1);
             ing.iname = temp;
 
             matcher2.find();
