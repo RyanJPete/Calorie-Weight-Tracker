@@ -183,13 +183,17 @@ public class EatActivity extends AppCompatActivity {
         DateTime dT = DateTime.now();
         int dayOfWeek = dT.getDayOfWeek();
         int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
-        int caloriesEntered = DDao.getDateCalories(today);
+        double caloriesEntered = DDao.getDateCalories(today);
         int weightEntered = DDao.getDateWeight(today);
         DayStats newEntry = new DayStats();
         newEntry.DayOfWeek = dayOfWeek;
         newEntry.DayDate = today;
         newEntry.DayWeight = weightEntered;
-        newEntry.DayCalories = Double.parseDouble(txt.getText().toString()) + caloriesEntered;
+        try {
+            newEntry.DayCalories = Double.parseDouble(txt.getText().toString()) + caloriesEntered;
+        }catch (Exception e){
+         System.out.print(e);
+            }
         newEntry.DayFat = 0.0;
         newEntry.DayCarbs = 0.0;
         newEntry.DayProtein = 0.0;
@@ -199,7 +203,7 @@ public class EatActivity extends AppCompatActivity {
         } else {  //an entry has been made for today
             newEntry.Fdate = DDao.getDateKey(today);
 
-            DDao.updateNutrition(Integer.parseInt(txt.getText().toString()) + caloriesEntered, 0, 0, 0, today);
+            DDao.updateNutrition(Double.parseDouble(txt.getText().toString()) + caloriesEntered, 0, 0, 0, today);
         }
     }
 }

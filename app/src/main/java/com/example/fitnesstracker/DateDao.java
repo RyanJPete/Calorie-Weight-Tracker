@@ -17,7 +17,7 @@ public interface DateDao{
     public int getDateWeight(int day);
 
     @Query("SELECT DayStats.calories FROM daystats WHERE DayStats.day = :day")
-    public int getDateCalories(int day);
+    public double getDateCalories(int day);
 
     @Query("SELECT DayStats.Fdate FROM DayStats WHERE DayStats.day = :day")
     public int getDateKey(int day);
@@ -27,7 +27,7 @@ public interface DateDao{
 
     @Query("UPDATE DayStats SET calories= :newCalories, fat= :newFat, carbs= :newCarbs, " +
             "protein= :newProtein WHERE DayStats.day = :day")
-    public int updateNutrition(int newCalories, int newFat, int newCarbs, int newProtein, int day);
+    public int updateNutrition(Double newCalories, int newFat, int newCarbs, int newProtein, int day);
 
     @Insert
     void insertAll(DayStats... dstat);
