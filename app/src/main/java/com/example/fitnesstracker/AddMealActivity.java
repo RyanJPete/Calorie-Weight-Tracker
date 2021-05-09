@@ -103,7 +103,7 @@ public class AddMealActivity extends AppCompatActivity {
             EditText ingredientQTY = (EditText) v.getChildAt(1);
             String iname = ingredientName.getText().toString();
             iname = iname.substring(0,iname.length()-1);
-            IngredientStats newIngredient = IDao.getByName(iname);
+            IngredientStats newIngredient = IDao.getByName(iname).get(0);
             newMeal.ingredientList.add(newIngredient);
 
         }

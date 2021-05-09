@@ -19,10 +19,10 @@ public interface IngredientDao {
     List<String> getNames();
 
     @Query(("SELECT calories FROM ingredientstats WHERE ingredientstats.name =:name"))
-    public int getCalories(String name);
+    int getCalories(String name);
 
     @Query(("SELECT * FROM ingredientstats WHERE ingredientstats.name =:name"))
-    public IngredientStats getByName(String name);
+    List<IngredientStats> getByName(String name);
 
     @Insert
     void insertAll(IngredientStats... istat);

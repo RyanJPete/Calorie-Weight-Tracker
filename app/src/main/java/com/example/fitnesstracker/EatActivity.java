@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.room.Room;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
+import static android.view.KeyEvent.KEYCODE_ENTER;
 
 public class EatActivity extends AppCompatActivity {
     AppDatabase db;
@@ -79,22 +81,25 @@ public class EatActivity extends AppCompatActivity {
                     ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
                     ingredientLayout.setGravity(1);
 
-                    String iName = ingredientList.get(x).iname;
+                    final String iName = ingredientList.get(x).iname;
                     TextView ingredientName = new TextView(getApplicationContext());
                     ingredientName.setText(iName + ":");
                     ingredientLayout.addView(ingredientName);
 
-                    EditText inputBox = new EditText((getApplicationContext()));
+                    final EditText inputBox = new EditText((getApplicationContext()));
                     inputBox.setInputType(TYPE_CLASS_NUMBER);
-                    inputBox.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v){
-                            TextView txt = findViewById(R.id.totalCalories);
-                            int calories = Integer.parseInt(txt.getText().toString());
-                            int vCalories = foodCaloriesMap.get(v);
-                            TextView input = (TextView) v;
-                            calories += Integer.parseInt(input.getText().toString())*vCalories;
-                            txt.setText(String.valueOf(calories));
+                    inputBox.setOnKeyListener(new View.OnKeyListener() {
+                        public boolean onKey(View v, int keyCode, KeyEvent event) {
+                            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                                TextView totalCalories = findViewById(R.id.totalCalories);
+                                int newCalories = Integer.parseInt(totalCalories.getText().toString());
+                                IngredientStats temping = IDao.getByName(iName).get(0);
+                                newCalories += Integer.parseInt(inputBox.getText().toString())*temping.icalories;
+                                totalCalories.setText(Integer.toString(newCalories));
+                                return true;
+                            }
+                            return false;
                         }
                     });
                     try {
@@ -133,7 +138,7 @@ public class EatActivity extends AppCompatActivity {
         ingredients.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                String selection = parent.getItemAtPosition(pos).toString();
+                final String selection = parent.getItemAtPosition(pos).toString();
                 if(selection.equals("Choose Ingredient")){      //stops creation of ingredient entry on default value
                     return;
                 }
@@ -143,21 +148,23 @@ public class EatActivity extends AppCompatActivity {
                 ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
                 ingredientLayout.setGravity(1);
 
-                TextView ingredientName = new TextView(getApplicationContext());
+                final TextView ingredientName = new TextView(getApplicationContext());
                 ingredientName.setText(selection + ":");
                 ingredientLayout.addView(ingredientName);
 
-                EditText inputBox = new EditText((getApplicationContext()));
+                final EditText inputBox = new EditText((getApplicationContext()));
                 inputBox.setInputType(TYPE_CLASS_NUMBER);
-                inputBox.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        TextView txt = findViewById(R.id.totalCalories);
-                        int calories = Integer.parseInt(txt.getText().toString());
-                        int vCalories = foodCaloriesMap.get(v);
-                        TextView input = (TextView) v;
-                        calories += Integer.parseInt(input.getText().toString())*vCalories;
-                        txt.setText(String.valueOf(calories));
+                inputBox.setOnKeyListener(new View.OnKeyListener() {
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                            TextView totalCalories = findViewById(R.id.totalCalories);
+                            int newCalories = Integer.parseInt(totalCalories.getText().toString());
+                            newCalories += Integer.parseInt(inputBox.getText().toString())*IDao.getByName(selection).get(0).icalories;
+                            totalCalories.setText(newCalories);
+                            return true;
+                        }
+                        return false;
                     }
                 });
                 ingredientLayout.addView(inputBox);

@@ -50,8 +50,8 @@ public class AddIngredientActivity extends AppCompatActivity {
             inputTxt = findViewById(R.id.portionText);
             newEntry.iportion = inputTxt.getText().toString();
             IDao.insertIngredient(newEntry);
-        List<IngredientStats> tmp = IDao.getAll();
-        grams++;
+        //List<IngredientStats> tmp = IDao.getAll();
+        //grams++;
 
     }
 
