@@ -13,16 +13,16 @@ public class IngredientStats {
     public String iname;
 
     @ColumnInfo(name = "calories")
-    public int icalories;
+    public double icalories;
 
     @ColumnInfo(name = "fat")
-    public int ifat;
+    public double ifat;
 
     @ColumnInfo(name = "carbs")
-    public int icarbs;
+    public double icarbs;
 
     @ColumnInfo(name = "protein")
-    public int iprotein;
+    public double iprotein;
 
     @ColumnInfo(name = "portionType")
     public String iportion;

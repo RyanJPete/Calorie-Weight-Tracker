@@ -19,7 +19,7 @@ public interface IngredientDao {
     List<String> getNames();
 
     @Query(("SELECT calories FROM ingredientstats WHERE ingredientstats.name =:name"))
-    int getCalories(String name);
+    double getCalories(String name);
 
     @Query(("SELECT * FROM ingredientstats WHERE ingredientstats.name =:name"))
     List<IngredientStats> getByName(String name);

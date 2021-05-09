@@ -40,13 +40,13 @@ public class AddIngredientActivity extends AppCompatActivity {
             inputTxt = findViewById(R.id.nameTxt);
             newEntry.iname = inputTxt.getText().toString();
             inputTxt = findViewById(R.id.calorieTxt);
-            newEntry.icalories = Integer.parseInt(inputTxt.getText().toString()) / grams;
+            newEntry.icalories = Double.parseDouble(inputTxt.getText().toString()) / grams;
             inputTxt = findViewById(R.id.fatTxt);
-            newEntry.ifat = Integer.parseInt(inputTxt.getText().toString()) / grams;
+            newEntry.ifat = Double.parseDouble(inputTxt.getText().toString()) / grams;
             inputTxt = findViewById(R.id.carbTxt);
-            newEntry.icarbs = Integer.parseInt(inputTxt.getText().toString()) / grams;
+            newEntry.icarbs = Double.parseDouble(inputTxt.getText().toString()) / grams;
             inputTxt = findViewById(R.id.proteinTxt);
-            newEntry.iprotein = Integer.parseInt(inputTxt.getText().toString()) / grams;
+            newEntry.iprotein = Double.parseDouble(inputTxt.getText().toString()) / grams;
             inputTxt = findViewById(R.id.portionText);
             newEntry.iportion = inputTxt.getText().toString();
             IDao.insertIngredient(newEntry);

@@ -65,10 +65,10 @@ public class RecordWeightActivity extends AppCompatActivity
             newEntry.DayOfWeek = dayOfWeek;
             newEntry.DayDate = today;
             newEntry.DayWeight = Integer.parseInt(txt.getText().toString());
-            newEntry.DayCalories = 0;
-            newEntry.DayFat = 0;
-            newEntry.DayCarbs = 0;
-            newEntry.DayProtein = 0;
+            newEntry.DayCalories = 0.0;
+            newEntry.DayFat = 0.0;
+            newEntry.DayCarbs = 0.0;
+            newEntry.DayProtein = 0.0;
             DDao.insertWeight(newEntry);
         } else if(weightEntered != 0){  //Weight has already been recorded today
             FragmentManager fm = getSupportFragmentManager();

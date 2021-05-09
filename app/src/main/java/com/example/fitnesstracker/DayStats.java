@@ -19,16 +19,16 @@ public class DayStats{
     public int DayOfWeek;
 
     @ColumnInfo(name= "calories")
-    public int DayCalories;
+    public Double DayCalories;
 
     @ColumnInfo(name= "fat")
-    public int DayFat;
+    public Double DayFat;
 
     @ColumnInfo(name= "carbs")
-    public int DayCarbs;
+    public Double DayCarbs;
 
     @ColumnInfo(name= "protein")
-    public int DayProtein;
+    public Double DayProtein;
 
     public String printStats(){
         String formattedDate = formatDate(String.valueOf(DayDate));

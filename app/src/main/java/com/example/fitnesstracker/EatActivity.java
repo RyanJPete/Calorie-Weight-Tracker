@@ -33,18 +33,18 @@ public class EatActivity extends AppCompatActivity {
     DateDao DDao;
     MealDao MDao;
     IngredientDao IDao;
-    Map<EditText, Integer> foodCaloriesMap;
+    Map<EditText, Double> foodCaloriesMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eat);
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "dateDatabase").allowMainThreadQueries().build();    //TODO remove allowMainThreadQueries, for testing purposeds only, do asynk task
+                AppDatabase.class, "dateDatabase").allowMainThreadQueries().build();    //TODO remove allowMainThreadQueries, for testing purposes only, do asynk task
         DDao = db.DayStats();
         IDao = db.IngredientStats();
         MDao = db.MealStats();
-        foodCaloriesMap = new HashMap<EditText, Integer>();
+        foodCaloriesMap = new HashMap<EditText, Double>();
 
         setupIngredientSpinner();
         setupMealSpinner();
@@ -93,10 +93,10 @@ public class EatActivity extends AppCompatActivity {
                             if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                                 TextView totalCalories = findViewById(R.id.totalCalories);
-                                int newCalories = Integer.parseInt(totalCalories.getText().toString());
+                                Double newCalories = Double.parseDouble(totalCalories.getText().toString());
                                 IngredientStats temping = IDao.getByName(iName).get(0);
-                                newCalories += Integer.parseInt(inputBox.getText().toString())*temping.icalories;
-                                totalCalories.setText(Integer.toString(newCalories));
+                                newCalories += Double.parseDouble(inputBox.getText().toString())*temping.icalories;
+                                totalCalories.setText(Double.toString(newCalories));
                                 return true;
                             }
                             return false;
@@ -104,7 +104,7 @@ public class EatActivity extends AppCompatActivity {
                     });
                     try {
                         ingredientLayout.addView(inputBox);
-                        Integer selectionCalories = IDao.getCalories(selection);
+                        double selectionCalories = IDao.getCalories(selection);
                         foodCaloriesMap.put(inputBox, selectionCalories);
                         eatLayout.addView(ingredientLayout);
                     }catch (Exception e){
@@ -159,16 +159,16 @@ public class EatActivity extends AppCompatActivity {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             TextView totalCalories = findViewById(R.id.totalCalories);
-                            int newCalories = Integer.parseInt(totalCalories.getText().toString());
-                            newCalories += Integer.parseInt(inputBox.getText().toString())*IDao.getByName(selection).get(0).icalories;
-                            totalCalories.setText(newCalories);
+                            Double newCalories = Double.parseDouble(totalCalories.getText().toString());
+                            newCalories += Double.parseDouble(inputBox.getText().toString())*IDao.getByName(selection).get(0).icalories;
+                            totalCalories.setText(Double.toString(newCalories));
                             return true;
                         }
                         return false;
                     }
                 });
                 ingredientLayout.addView(inputBox);
-                Integer selectionCalories = IDao.getCalories(selection);
+                Double selectionCalories = IDao.getCalories(selection);
                 foodCaloriesMap.put(inputBox, selectionCalories);
 
                 eatLayout.addView(ingredientLayout);
@@ -193,10 +193,10 @@ public class EatActivity extends AppCompatActivity {
         newEntry.DayOfWeek = dayOfWeek;
         newEntry.DayDate = today;
         newEntry.DayWeight = weightEntered;
-        newEntry.DayCalories = Integer.parseInt(txt.getText().toString()) + caloriesEntered;
-        newEntry.DayFat = 0;
-        newEntry.DayCarbs = 0;
-        newEntry.DayProtein = 0;
+        newEntry.DayCalories = Double.parseDouble(txt.getText().toString()) + caloriesEntered;
+        newEntry.DayFat = 0.0;
+        newEntry.DayCarbs = 0.0;
+        newEntry.DayProtein = 0.0;
 
         if (caloriesEntered == 0 && weightEntered == 0) {  //No entry has been made for today
             DDao.insertWeight(newEntry);
