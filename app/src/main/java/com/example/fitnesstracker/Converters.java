@@ -16,7 +16,7 @@ public class Converters {
 
         for(int x = 0; x < list.size(); x++){
             IngredientStats ing = list.get(x);
-            string += "," + ing.iname + "," + ing.ifat + "," + ing.icarbs + "," + ing.iprotein + "," +
+            string += ing.iname + "," + ing.ifat + "," + ing.icarbs + "," + ing.iprotein + "," +
                     ing.icalories + "," + Integer.toString(ing.key) + "," + ";";
         }
    return string;
@@ -26,25 +26,22 @@ public class Converters {
     @TypeConverter
     public static List<IngredientStats> stringToList(String string){
         List<IngredientStats> list = new LinkedList<IngredientStats>();
-
-        Pattern pattern = Pattern.compile("([a-zA-z]|[0-9]|,)+;");   //TODO clean inputs
+        Pattern pattern = Pattern.compile("([a-zA-z]|[0-9]|\\s|,)+;");   //TODO clean inputs
         Matcher matcher = pattern.matcher(string);
 
         while(matcher.find()){
             IngredientStats ing = new IngredientStats();
             String innerString = matcher.group();
-            Pattern pattern2 = Pattern.compile("([a-zA-z]|[0-9])+,");
+            Pattern pattern2 = Pattern.compile("([a-zA-z]|[0-9]|\\s|)+,");
             Matcher matcher2 = pattern2.matcher(innerString);
 
             matcher2.find();
             String temp = matcher2.group();
             temp = temp.substring(0,temp.length() - 1);
             ing.iname = temp;
-
             matcher2.find();
-            temp = matcher2.group().substring(0,matcher2.group().length() - 1);
+            temp = matcher2.group().substring(0, matcher2.group().length() - 1);
             ing.ifat = Integer.parseInt(temp);
-
             matcher2.find();
             String test = matcher2.group();
             ing.icarbs = Integer.parseInt(matcher2.group().substring(0,matcher2.group().length() - 1));
