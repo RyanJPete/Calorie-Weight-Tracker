@@ -50,6 +50,19 @@ public class EatActivity extends AppCompatActivity {
         setupMealSpinner();
     }
 
+    private boolean addCalories(View v, int keyCode, KeyEvent event, String iName, EditText inputBox){
+        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            TextView totalCalories = findViewById(R.id.totalCalories);
+            Double newCalories = Double.parseDouble(totalCalories.getText().toString());
+            IngredientStats temping = IDao.getByName(iName).get(0);
+            newCalories += Double.parseDouble(inputBox.getText().toString())*temping.icalories;
+            totalCalories.setText(Double.toString(newCalories));
+            return true;
+        }
+        return false;
+    }
+
     private void setupMealSpinner(){
         Spinner meals = findViewById(R.id.mealDropdown);
 
@@ -90,16 +103,7 @@ public class EatActivity extends AppCompatActivity {
                     inputBox.setInputType(TYPE_CLASS_NUMBER);
                     inputBox.setOnKeyListener(new View.OnKeyListener() {
                         public boolean onKey(View v, int keyCode, KeyEvent event) {
-                            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                                TextView totalCalories = findViewById(R.id.totalCalories);
-                                Double newCalories = Double.parseDouble(totalCalories.getText().toString());
-                                IngredientStats temping = IDao.getByName(iName).get(0);
-                                newCalories += Double.parseDouble(inputBox.getText().toString())*temping.icalories;
-                                totalCalories.setText(Double.toString(newCalories));
-                                return true;
-                            }
-                            return false;
+                            return addCalories(v, keyCode, event, iName, inputBox);
                         }
                     });
                     try {
@@ -156,15 +160,7 @@ public class EatActivity extends AppCompatActivity {
                 inputBox.setInputType(TYPE_CLASS_NUMBER);
                 inputBox.setOnKeyListener(new View.OnKeyListener() {
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                                (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            TextView totalCalories = findViewById(R.id.totalCalories);
-                            Double newCalories = Double.parseDouble(totalCalories.getText().toString());
-                            newCalories += Double.parseDouble(inputBox.getText().toString())*IDao.getByName(selection).get(0).icalories;
-                            totalCalories.setText(Double.toString(newCalories));
-                            return true;
-                        }
-                        return false;
+                        return addCalories(v, keyCode, event, selection, inputBox);
                     }
                 });
                 ingredientLayout.addView(inputBox);
