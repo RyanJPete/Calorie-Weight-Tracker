@@ -189,11 +189,7 @@ public class EatActivity extends AppCompatActivity {
         newEntry.DayOfWeek = dayOfWeek;
         newEntry.DayDate = today;
         newEntry.DayWeight = weightEntered;
-        try {
-            newEntry.DayCalories = Double.parseDouble(txt.getText().toString()) + caloriesEntered;
-        }catch (Exception e){
-         System.out.print(e);
-            }
+        newEntry.DayCalories = Double.parseDouble(txt.getText().toString()) + caloriesEntered;
         newEntry.DayFat = 0.0;
         newEntry.DayCarbs = 0.0;
         newEntry.DayProtein = 0.0;
