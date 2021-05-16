@@ -51,8 +51,7 @@ public class EatActivity extends AppCompatActivity {
     }
 
     private boolean addCalories(View v, int keyCode, KeyEvent event, String iName, EditText inputBox){
-        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+        if ((event.getAction() == KeyEvent.ACTION_UP)) {
            /* TextView totalCalories = findViewById(R.id.totalCalories);
             /*Double newCalories = Double.parseDouble(totalCalories.getText().toString());
             IngredientStats temping = IDao.getByName(iName).get(0);
