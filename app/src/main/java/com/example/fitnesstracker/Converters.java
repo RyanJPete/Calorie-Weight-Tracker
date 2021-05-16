@@ -26,13 +26,13 @@ public class Converters {
     @TypeConverter
     public static List<IngredientStats> stringToList(String string){
         List<IngredientStats> list = new LinkedList<IngredientStats>();
-        Pattern pattern = Pattern.compile("([a-zA-z]|[0-9]|\\s|,)+;");   //TODO clean inputs
+        Pattern pattern = Pattern.compile("([a-zA-z]|[0-9]|\\s|\\.|,)+;");   //TODO clean inputs
         Matcher matcher = pattern.matcher(string);
 
         while(matcher.find()){
             IngredientStats ing = new IngredientStats();
             String innerString = matcher.group();
-            Pattern pattern2 = Pattern.compile("([a-zA-z]|[0-9]|\\s|)+,");
+            Pattern pattern2 = Pattern.compile("([a-zA-z]|[0-9]|\\s|\\.|)+,");
             Matcher matcher2 = pattern2.matcher(innerString);
 
             matcher2.find();
@@ -41,17 +41,17 @@ public class Converters {
             ing.iname = temp;
             matcher2.find();
             temp = matcher2.group().substring(0, matcher2.group().length() - 1);
-            ing.ifat = Integer.parseInt(temp);
+            ing.ifat = Double.parseDouble(temp);
             matcher2.find();
             String test = matcher2.group();
-            ing.icarbs = Integer.parseInt(matcher2.group().substring(0,matcher2.group().length() - 1));
+            ing.icarbs = Double.parseDouble(matcher2.group().substring(0,matcher2.group().length() - 1));
 
             matcher2.find();
             test = matcher2.group();
-            ing.iprotein = Integer.parseInt(matcher2.group().substring(0,matcher2.group().length() - 1));
+            ing.iprotein = Double.parseDouble(matcher2.group().substring(0,matcher2.group().length() - 1));
 
             matcher2.find();
-            ing.icalories = Integer.parseInt(matcher2.group().substring(0,matcher2.group().length() - 1));
+            ing.icalories = Double.parseDouble(matcher2.group().substring(0,matcher2.group().length() - 1));
 
             matcher2.find();
             ing.key = Integer.parseInt(matcher2.group().substring(0,matcher2.group().length() - 1));
