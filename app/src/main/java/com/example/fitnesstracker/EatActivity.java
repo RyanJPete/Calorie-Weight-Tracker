@@ -53,11 +53,26 @@ public class EatActivity extends AppCompatActivity {
     private boolean addCalories(View v, int keyCode, KeyEvent event, String iName, EditText inputBox){
         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-            TextView totalCalories = findViewById(R.id.totalCalories);
-            Double newCalories = Double.parseDouble(totalCalories.getText().toString());
+           /* TextView totalCalories = findViewById(R.id.totalCalories);
+            /*Double newCalories = Double.parseDouble(totalCalories.getText().toString());
             IngredientStats temping = IDao.getByName(iName).get(0);
             newCalories += Double.parseDouble(inputBox.getText().toString())*temping.icalories;
-            totalCalories.setText(Double.toString(newCalories));
+            totalCalories.setText(Double.toString(newCalories));*/
+
+           double totalCalories = 0;
+           TextView calorieSumText = findViewById(R.id.totalCalories);
+
+    for (Map.Entry<EditText, Double> textEntry : foodCaloriesMap.entrySet()) {
+        double qty = 0;
+        String temp = textEntry.getKey().getText().toString();
+        if(!textEntry.getKey().getText().toString().equals("")) {
+            qty = Double.parseDouble(textEntry.getKey().getText().toString());
+            totalCalories += qty * textEntry.getValue();
+        }
+
+    }
+
+            calorieSumText.setText(Double.toString(totalCalories));
             return true;
         }
         return false;
@@ -68,7 +83,11 @@ public class EatActivity extends AppCompatActivity {
 
         List<String> mealList = MDao.getNames();
         mealList.add(0,"Choose Meal");
-        List<MealStats> stats = MDao.getAll();
+        try {
+            List<MealStats> stats = MDao.getAll();
+        } catch (Exception e){
+            System.out.print(e);
+        }
         final String[] mealArray = mealList.toArray(new String[0]);
         List<DayStats> dstats = DDao.getAll();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -108,7 +127,7 @@ public class EatActivity extends AppCompatActivity {
                     });
                     try {
                         ingredientLayout.addView(inputBox);
-                        double selectionCalories = IDao.getCalories(selection);
+                        double selectionCalories = IDao.getCalories(iName);
                         foodCaloriesMap.put(inputBox, selectionCalories);
                         eatLayout.addView(ingredientLayout);
                     }catch (Exception e){
