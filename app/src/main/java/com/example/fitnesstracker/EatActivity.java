@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.KeyEvent.KEYCODE_ENTER;
 
 public class EatActivity extends AppCompatActivity {
@@ -51,7 +52,7 @@ public class EatActivity extends AppCompatActivity {
     }
 
     private boolean addCalories(View v, int keyCode, KeyEvent event, String iName, EditText inputBox){
-        if ((event.getAction() == KeyEvent.ACTION_UP)) {
+        if ((event.getAction() == KeyEvent.ACTION_UP && keyCode != KEYCODE_ENTER) && keyCode != KEYCODE_BACK) {
            /* TextView totalCalories = findViewById(R.id.totalCalories);
             /*Double newCalories = Double.parseDouble(totalCalories.getText().toString());
             IngredientStats temping = IDao.getByName(iName).get(0);
