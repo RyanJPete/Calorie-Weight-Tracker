@@ -83,11 +83,7 @@ public class EatActivity extends AppCompatActivity {
 
         List<String> mealList = MDao.getNames();
         mealList.add(0, "Choose Meal");
-        try {
-            List<MealStats> stats = MDao.getAll();
-        } catch (Exception e) {
-            System.out.print(e);
-        }
+        List<MealStats> stats = MDao.getAll();
         final String[] mealArray = mealList.toArray(new String[0]);
         List<DayStats> dstats = DDao.getAll();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
