@@ -93,6 +93,7 @@ public class AddMealActivity extends AppCompatActivity {
 
         MealStats newMeal = new MealStats();
         newMeal.ingredientList = new LinkedList<IngredientStats>();
+        newMeal.defaultQty = new LinkedList<Double>();
 
         String mealName = nameTxt.getText().toString();
         newMeal.mname = mealName;
@@ -105,7 +106,7 @@ public class AddMealActivity extends AppCompatActivity {
             iname = iname.substring(0,iname.length()-1);
             IngredientStats newIngredient = IDao.getByName(iname).get(0);
             newMeal.ingredientList.add(newIngredient);
-
+            newMeal.defaultQty.add(Double.parseDouble(ingredientQTY.getText().toString()));
         }
             MDao.insertMeal(newMeal);
     }

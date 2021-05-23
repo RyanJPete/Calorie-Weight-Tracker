@@ -5,9 +5,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.room.Room;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,6 +39,7 @@ public class EatActivity extends AppCompatActivity {
     MealDao MDao;
     IngredientDao IDao;
     Map<EditText, Double> foodCaloriesMap;
+    InputMethodManager imm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class EatActivity extends AppCompatActivity {
         IDao = db.IngredientStats();
         MDao = db.MealStats();
         foodCaloriesMap = new HashMap<EditText, Double>();
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         setupIngredientSpinner();
         setupMealSpinner();
@@ -103,6 +109,7 @@ public class EatActivity extends AppCompatActivity {
                 LinearLayout eatLayout = findViewById(R.id.eatLayout);
 
                 LinkedList<IngredientStats> ingredientList = (LinkedList<IngredientStats>) MDao.getByName(selection).ingredientList;
+                LinkedList<Double> qtyList = (LinkedList<Double>) MDao.getByName(selection).defaultQty;
 
                 for (int x = 0; x < ingredientList.size(); x++) {
                     LinearLayout ingredientLayout = new LinearLayout(getApplicationContext());     //set up horizontal layout to add to vertical layout
@@ -121,14 +128,22 @@ public class EatActivity extends AppCompatActivity {
                             return addCalories(v, keyCode, event, iName, inputBox);
                         }
                     });
-                    try {
-                        ingredientLayout.addView(inputBox);
-                        double selectionCalories = IDao.getCalories(iName);
-                        foodCaloriesMap.put(inputBox, selectionCalories);
-                        eatLayout.addView(ingredientLayout);
-                    } catch (Exception e) {
-                        System.out.print(e);
-                    }
+                    inputBox.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if (hasFocus) {
+                                inputBox.setText("");
+                                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                            } else {
+                                imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+                            }
+                        }
+                    });
+                    inputBox.setText(qtyList.get(x).toString());
+
+                    ingredientLayout.addView(inputBox);
+                    double selectionCalories = IDao.getCalories(iName);
+                    foodCaloriesMap.put(inputBox, selectionCalories);
+                    eatLayout.addView(ingredientLayout);
 
                 }
             }
@@ -178,6 +193,17 @@ public class EatActivity extends AppCompatActivity {
                         return addCalories(v, keyCode, event, selection, inputBox);
                     }
                 });
+                inputBox.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus) {
+                            inputBox.setText("");
+                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                        } else {
+                            imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+                        }
+                    }
+                });
+
                 ingredientLayout.addView(inputBox);
                 Double selectionCalories = IDao.getCalories(selection);
                 foodCaloriesMap.put(inputBox, selectionCalories);

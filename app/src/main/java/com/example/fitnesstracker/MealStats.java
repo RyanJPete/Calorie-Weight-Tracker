@@ -16,4 +16,7 @@ public class MealStats {
 
     @ColumnInfo(name = "ingredientList")
     public List<IngredientStats> ingredientList;
+
+    @ColumnInfo(name = "defaultQty")
+    public  List<Double> defaultQty;
 }
