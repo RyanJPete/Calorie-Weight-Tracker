@@ -51,7 +51,7 @@ public class EatActivity extends AppCompatActivity {
         setupMealSpinner();
     }
 
-    private boolean addCalories(View v, int keyCode, KeyEvent event, String iName, EditText inputBox){
+    private boolean addCalories(View v, int keyCode, KeyEvent event, String iName, EditText inputBox) {
         if ((event.getAction() == KeyEvent.ACTION_UP && keyCode != KEYCODE_ENTER) && keyCode != KEYCODE_BACK) {
            /* TextView totalCalories = findViewById(R.id.totalCalories);
             /*Double newCalories = Double.parseDouble(totalCalories.getText().toString());
@@ -59,18 +59,18 @@ public class EatActivity extends AppCompatActivity {
             newCalories += Double.parseDouble(inputBox.getText().toString())*temping.icalories;
             totalCalories.setText(Double.toString(newCalories));*/
 
-           double totalCalories = 0;
-           TextView calorieSumText = findViewById(R.id.totalCalories);
+            double totalCalories = 0;
+            TextView calorieSumText = findViewById(R.id.totalCalories);
 
-    for (Map.Entry<EditText, Double> textEntry : foodCaloriesMap.entrySet()) {
-        double qty = 0;
-        String temp = textEntry.getKey().getText().toString();
-        if(!textEntry.getKey().getText().toString().equals("")) {
-            qty = Double.parseDouble(textEntry.getKey().getText().toString());
-            totalCalories += qty * textEntry.getValue();
-        }
+            for (Map.Entry<EditText, Double> textEntry : foodCaloriesMap.entrySet()) {
+                double qty = 0;
+                String temp = textEntry.getKey().getText().toString();
+                if (!textEntry.getKey().getText().toString().equals("")) {
+                    qty = Double.parseDouble(textEntry.getKey().getText().toString());
+                    totalCalories += qty * textEntry.getValue();
+                }
 
-    }
+            }
 
             calorieSumText.setText(Double.toString(totalCalories));
             return true;
@@ -78,14 +78,14 @@ public class EatActivity extends AppCompatActivity {
         return false;
     }
 
-    private void setupMealSpinner(){
+    private void setupMealSpinner() {
         Spinner meals = findViewById(R.id.mealDropdown);
 
         List<String> mealList = MDao.getNames();
-        mealList.add(0,"Choose Meal");
+        mealList.add(0, "Choose Meal");
         try {
             List<MealStats> stats = MDao.getAll();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.print(e);
         }
         final String[] mealArray = mealList.toArray(new String[0]);
@@ -100,7 +100,7 @@ public class EatActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selection = parent.getItemAtPosition(pos).toString();
-                if(selection.equals("Choose Meal")){      //stops creation of ingredient entry on default value
+                if (selection.equals("Choose Meal")) {      //stops creation of ingredient entry on default value
                     return;
                 }
 
@@ -108,7 +108,7 @@ public class EatActivity extends AppCompatActivity {
 
                 LinkedList<IngredientStats> ingredientList = (LinkedList<IngredientStats>) MDao.getByName(selection).ingredientList;
 
-                for(int x = 0; x < ingredientList.size(); x++){
+                for (int x = 0; x < ingredientList.size(); x++) {
                     LinearLayout ingredientLayout = new LinearLayout(getApplicationContext());     //set up horizontal layout to add to vertical layout
                     ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
                     ingredientLayout.setGravity(1);
@@ -130,7 +130,7 @@ public class EatActivity extends AppCompatActivity {
                         double selectionCalories = IDao.getCalories(iName);
                         foodCaloriesMap.put(inputBox, selectionCalories);
                         eatLayout.addView(ingredientLayout);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         System.out.print(e);
                     }
 
@@ -144,11 +144,11 @@ public class EatActivity extends AppCompatActivity {
         });
     }
 
-    private void setupIngredientSpinner(){
+    private void setupIngredientSpinner() {
         Spinner ingredients = findViewById(R.id.ingredientDropdown);
 
         List<String> ingredientList = IDao.getNames();
-        ingredientList.add(0,"Choose Ingredient");
+        ingredientList.add(0, "Choose Ingredient");
         List<IngredientStats> stats = IDao.getAll();
         final String[] ingredientArray = ingredientList.toArray(new String[0]);
         List<DayStats> dstats = DDao.getAll();
@@ -162,10 +162,10 @@ public class EatActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 final String selection = parent.getItemAtPosition(pos).toString();
-                if(selection.equals("Choose Ingredient")){      //stops creation of ingredient entry on default value
+                if (selection.equals("Choose Ingredient")) {      //stops creation of ingredient entry on default value
                     return;
                 }
-                LinearLayout eatLayout = (LinearLayout)findViewById(R.id.eatLayout);
+                LinearLayout eatLayout = (LinearLayout) findViewById(R.id.eatLayout);
 
                 LinearLayout ingredientLayout = new LinearLayout(getApplicationContext());     //set up horizontal layout to add to vertical layout
                 ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -196,12 +196,12 @@ public class EatActivity extends AppCompatActivity {
         });
     }
 
-    public void eat (View view){
+    public void eat(View view) {
         TextView txt = findViewById(R.id.totalCalories);
 
         DateTime dT = DateTime.now();
         int dayOfWeek = dT.getDayOfWeek();
-        int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
+        int today = dT.getMonthOfYear() * 1000000 + dT.getDayOfMonth() * 10000 + dT.getYear();
         double caloriesEntered = DDao.getDateCalories(today);
         int weightEntered = DDao.getDateWeight(today);
         DayStats newEntry = new DayStats();
