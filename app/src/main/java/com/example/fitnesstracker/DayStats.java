@@ -30,6 +30,11 @@ public class DayStats{
     @ColumnInfo(name= "protein")
     public double DayProtein;
 
+    public DayStats(){
+        DayWeight = 0;
+        DayCalories = 0;
+    }
+
     public String printStats(){
         String formattedDate = formatDate(String.valueOf(DayDate));
         String ret = "Date: " + formattedDate + ", Weight: " + String.valueOf(DayWeight) +
