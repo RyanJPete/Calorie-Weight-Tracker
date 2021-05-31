@@ -6,7 +6,7 @@
     <string name="ingBtnTxt">Add Ingredients</string>
     <string name="nameTxtTxt">Enter Name</string>
     <string name="calorieTxtTxt">Enter Calories</string>
-    <string name="gramTxtTxt">Enter Grams</string>
+    <string name="qtyTxtTxt">Enter QTY</string>
     <string name="carbTxtTxt">Enter Carbs</string>
     <string name="fatTxtTxt">Enter Fat</string>
     <string name="proteinTxtTxt">Enter Protein</string>
