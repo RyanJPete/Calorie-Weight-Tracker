@@ -28,24 +28,37 @@ public class ViewStatsActivity extends AppCompatActivity {
     }
 
     public void printWeeklyStats(){
-        TextView txt = findViewById(R.id.statstxt);
+        TextView weightTxt = findViewById(R.id.aveWeightTxt);
+        TextView calText = findViewById(R.id.aveCaloriesTxt);
         DateTime dT = DateTime.now();
         int today = dT.getMonthOfYear()*1000000 + dT.getDayOfMonth()*10000 + dT.getYear();
         int dayOfWeek = (dT.getDayOfWeek() + 1) % 7;
-        int weeklyTotal = 0;
-        int daysRecorded = 0;
+        int weeklyTotalWeight = 0;
+        double weeklyTotalCalories = 0;
+        int weightDaysRecorded = 0;
+        int calorieDaysRecorded = 0;
 
         for(int x = 0; x <= dayOfWeek; x++){
-            int dayweight = DDao.getDateWeight(todayMinusX(today, x));
-            weeklyTotal += dayweight;
-            if(dayweight > 0){
-                daysRecorded++;
+            int dayWeight = DDao.getDateWeight(todayMinusX(today, x));
+            double dayCal = DDao.getDateCalories(todayMinusX(today, x));
+            if(dayWeight > 0){
+                weeklyTotalWeight += dayWeight;
+                weightDaysRecorded++;
+            }
+            if(dayCal > 0){
+                weeklyTotalCalories += dayCal;
+                calorieDaysRecorded++;
             }
         }
-        if(dayOfWeek > 0) {
-            txt.setText("This Weeks Average Weight is: " + weeklyTotal / dayOfWeek);
+        if(weeklyTotalWeight > 0) {
+            weightTxt.setText("This Weeks Average Weight is: " + weeklyTotalWeight / weightDaysRecorded);
         } else {
-            txt.setText("No weight this week");
+            weightTxt.setText("No weight this week");
+        }
+        if(weeklyTotalCalories > 0) {
+            calText.setText("This week's average calorie count is: " + weeklyTotalCalories / calorieDaysRecorded);
+        } else {
+            calText.setText("No calories this week");
         }
     }
 
