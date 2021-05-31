@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/mealNameTxt"
+        android:id="@+id/mealNameInput"
         android:layout_width="244dp"
         android:layout_height="41dp"
         android:layout_marginEnd="60dp"
@@ -45,15 +45,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Meal Name"
-        app:layout_constraintBottom_toBottomOf="@+id/mealNameTxt"
-        app:layout_constraintEnd_toStartOf="@+id/mealNameTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/mealNameInput"
+        app:layout_constraintEnd_toStartOf="@+id/mealNameInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addMealBtn" />
 
+    <EditText
+        android:id="@+id/portionNumInput"
+        android:layout_width="244dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mealNameInput" />
+
+    <TextView
+        android:id="@+id/portionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="# Of Portions"
+        app:layout_constraintBottom_toBottomOf="@+id/portionNumInput"
+        app:layout_constraintEnd_toStartOf="@+id/portionNumInput"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/portionNumInput"
+        app:layout_constraintVertical_bias="0.576" />
+
     <LinearLayout
         android:id="@+id/mealLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="412dp"
+        android:layout_height="526dp"
         android:layout_marginTop="152dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"

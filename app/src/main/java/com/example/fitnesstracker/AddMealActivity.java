@@ -89,7 +89,9 @@ public class AddMealActivity extends AppCompatActivity {
         LinearLayout mealLayout = findViewById(R.id.mealLayout);
         int count = mealLayout.getChildCount();
         LinearLayout v = null;
-        EditText nameTxt = findViewById(R.id.mealNameTxt);
+        EditText nameTxt = findViewById(R.id.mealNameInput);
+        EditText portionNumText = findViewById(R.id.portionNumInput);
+        int portionCount = Integer.parseInt(portionNumText.getText().toString());
 
         MealStats newMeal = new MealStats();
         newMeal.ingredientList = new LinkedList<IngredientStats>();
@@ -106,7 +108,7 @@ public class AddMealActivity extends AppCompatActivity {
             iname = iname.substring(0,iname.length()-1);
             IngredientStats newIngredient = IDao.getByName(iname).get(0);
             newMeal.ingredientList.add(newIngredient);
-            newMeal.defaultQty.add(Double.parseDouble(ingredientQTY.getText().toString()));
+            newMeal.defaultQty.add(Double.parseDouble(ingredientQTY.getText().toString())/portionCount);
         }
             MDao.insertMeal(newMeal);
     }
