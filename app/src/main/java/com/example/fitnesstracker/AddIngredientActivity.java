@@ -5,10 +5,9 @@ import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.List;
 
 public class AddIngredientActivity extends AppCompatActivity {
     AppDatabase db;
@@ -26,13 +25,35 @@ public class AddIngredientActivity extends AppCompatActivity {
     }
 
     public void ingredientBtnClick(View view){
+        Button addBtn = findViewById(R.id.addIngredientBtn);
 
+        if(addBtn.getText().toString().equals("Reset?")){
+                EditText inputTxt;
+            inputTxt = findViewById(R.id.nameTxt);
+            inputTxt.setText("");
+            inputTxt = findViewById(R.id.calorieTxt);
+            inputTxt.setText("");
+
+            inputTxt = findViewById(R.id.fatTxt);
+            inputTxt.setText("");
+
+            inputTxt = findViewById(R.id.carbTxt);
+            inputTxt.setText("");
+
+            inputTxt = findViewById(R.id.proteinTxt);
+            inputTxt.setText("");
+
+            inputTxt = findViewById(R.id.portionText);
+            inputTxt.setText("");
+            addBtn.setText("Add Ingredient");
+
+        } else {
             TextView inputTxt;
             int grams;
             IngredientStats newEntry = new IngredientStats();
 
             inputTxt = findViewById(R.id.gramsTxt);
-            if (inputTxt.getText().toString().matches("")){
+            if (inputTxt.getText().toString().matches("")) {
                 return;
             }
             grams = Integer.parseInt(inputTxt.getText().toString());
@@ -50,9 +71,11 @@ public class AddIngredientActivity extends AppCompatActivity {
             inputTxt = findViewById(R.id.portionText);
             newEntry.iportion = inputTxt.getText().toString();
             IDao.insertIngredient(newEntry);
-        //List<IngredientStats> tmp = IDao.getAll();
-        //grams++;
 
+            addBtn.setText("Reset?");
+            //List<IngredientStats> tmp = IDao.getAll();
+            //grams++;
+        }
     }
 
     public void clearTextBox(View view){
