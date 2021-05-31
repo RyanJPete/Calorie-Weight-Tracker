@@ -31,18 +31,16 @@ public class AddIngredientActivity extends AppCompatActivity {
                 EditText inputTxt;
             inputTxt = findViewById(R.id.nameTxt);
             inputTxt.setText("");
+            inputTxt = findViewById(R.id.gramsTxt);
+            inputTxt.setText("");
             inputTxt = findViewById(R.id.calorieTxt);
             inputTxt.setText("");
-
             inputTxt = findViewById(R.id.fatTxt);
             inputTxt.setText("");
-
             inputTxt = findViewById(R.id.carbTxt);
             inputTxt.setText("");
-
             inputTxt = findViewById(R.id.proteinTxt);
             inputTxt.setText("");
-
             inputTxt = findViewById(R.id.portionText);
             inputTxt.setText("");
             addBtn.setText("Add Ingredient");
