@@ -38,7 +38,7 @@ public class EatActivity extends AppCompatActivity {
     DateDao DDao;
     MealDao MDao;
     IngredientDao IDao;
-    Map<EditText, Double> foodCaloriesMap;
+    Map<EditText, Double> foodCaloriesMap;  //input box and calorie per qty
     InputMethodManager imm;
 
     @Override
@@ -57,28 +57,32 @@ public class EatActivity extends AppCompatActivity {
         setupMealSpinner();
     }
 
-    private boolean addCalories(View v, int keyCode, KeyEvent event, String iName, EditText inputBox) {
+    private void addCalories(){
+        double totalCalories = 0;
+        TextView calorieSumText = findViewById(R.id.totalCalories);
+
+        for (Map.Entry<EditText, Double> textEntry : foodCaloriesMap.entrySet()) {
+            double qty = 0;
+            String temp = textEntry.getKey().getText().toString();
+            if (!textEntry.getKey().getText().toString().equals("")) {
+                qty = Double.parseDouble(textEntry.getKey().getText().toString());
+                totalCalories += qty * textEntry.getValue();
+            }
+
+        }
+
+        calorieSumText.setText(Double.toString(totalCalories));
+    }
+
+    private boolean addCaloriesBtn(View v, int keyCode, KeyEvent event, String iName, EditText inputBox) {
         if ((event.getAction() == KeyEvent.ACTION_UP && keyCode != KEYCODE_ENTER) && keyCode != KEYCODE_BACK) {
            /* TextView totalCalories = findViewById(R.id.totalCalories);
-            /*Double newCalories = Double.parseDouble(totalCalories.getText().toString());
+            Double newCalories = Double.parseDouble(totalCalories.getText().toString());
             IngredientStats temping = IDao.getByName(iName).get(0);
             newCalories += Double.parseDouble(inputBox.getText().toString())*temping.icalories;
             totalCalories.setText(Double.toString(newCalories));*/
+            addCalories();
 
-            double totalCalories = 0;
-            TextView calorieSumText = findViewById(R.id.totalCalories);
-
-            for (Map.Entry<EditText, Double> textEntry : foodCaloriesMap.entrySet()) {
-                double qty = 0;
-                String temp = textEntry.getKey().getText().toString();
-                if (!textEntry.getKey().getText().toString().equals("")) {
-                    qty = Double.parseDouble(textEntry.getKey().getText().toString());
-                    totalCalories += qty * textEntry.getValue();
-                }
-
-            }
-
-            calorieSumText.setText(Double.toString(totalCalories));
             return true;
         }
         return false;
@@ -125,7 +129,7 @@ public class EatActivity extends AppCompatActivity {
                     inputBox.setInputType(TYPE_CLASS_NUMBER);
                     inputBox.setOnKeyListener(new View.OnKeyListener() {
                         public boolean onKey(View v, int keyCode, KeyEvent event) {
-                            return addCalories(v, keyCode, event, iName, inputBox);
+                            return addCaloriesBtn(v, keyCode, event, iName, inputBox);
                         }
                     });
                     inputBox.setOnFocusChangeListener(new View.OnFocusChangeListener(){
@@ -144,6 +148,7 @@ public class EatActivity extends AppCompatActivity {
                     double selectionCalories = IDao.getCalories(iName);
                     foodCaloriesMap.put(inputBox, selectionCalories);
                     eatLayout.addView(ingredientLayout);
+                    addCalories();
 
                 }
             }
@@ -190,7 +195,7 @@ public class EatActivity extends AppCompatActivity {
                 inputBox.setInputType(TYPE_CLASS_NUMBER);
                 inputBox.setOnKeyListener(new View.OnKeyListener() {
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        return addCalories(v, keyCode, event, selection, inputBox);
+                        return addCaloriesBtn(v, keyCode, event, selection, inputBox);
                     }
                 });
                 inputBox.setOnFocusChangeListener(new View.OnFocusChangeListener(){
