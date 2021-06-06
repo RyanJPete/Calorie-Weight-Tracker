@@ -37,7 +37,7 @@ public class Converters {
         return list;
     }
 
-    //Turns a list of ingredients into a String of the format "name,fat,carbs,protein,calories,key;"
+    //Turns a list of ingredients into a String of the format "name,fat,carbs,protein,calories,unit,key;"
     @TypeConverter
     public static String listToString(List<IngredientStats> list){
         String string = "";
@@ -45,7 +45,7 @@ public class Converters {
         for(int x = 0; x < list.size(); x++){
             IngredientStats ing = list.get(x);
             string += ing.iname + "," + ing.ifat + "," + ing.icarbs + "," + ing.iprotein + "," +
-                    ing.icalories + "," + Integer.toString(ing.key) + "," + ";";
+                    ing.icalories + "," + ing.iportion + ',' + Integer.toString(ing.key) + "," + ";";
         }
    return string;
 
@@ -80,6 +80,11 @@ public class Converters {
 
             matcher2.find();
             ing.icalories = Double.parseDouble(matcher2.group().substring(0,matcher2.group().length() - 1));
+
+            matcher2.find();
+            temp = matcher2.group();
+            temp = temp.substring(0,temp.length() - 1);
+            ing.iportion = temp;
 
             matcher2.find();
             ing.key = Integer.parseInt(matcher2.group().substring(0,matcher2.group().length() - 1));

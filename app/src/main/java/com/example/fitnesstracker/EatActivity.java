@@ -144,9 +144,17 @@ public class EatActivity extends AppCompatActivity {
                     });
                     inputBox.setText(qtyList.get(x).toString());
 
+
+
                     ingredientLayout.addView(inputBox);
                     double selectionCalories = IDao.getCalories(iName);
                     foodCaloriesMap.put(inputBox, selectionCalories);
+
+                    final String iPortion = ingredientList.get(x).iportion + "s";
+                    final TextView ingredientUnit = new TextView(getApplicationContext());
+                    ingredientUnit.setText(iPortion);
+                    ingredientLayout.addView(ingredientUnit);
+
                     eatLayout.addView(ingredientLayout);
                     addCalories();
 
@@ -208,12 +216,17 @@ public class EatActivity extends AppCompatActivity {
                         }
                     }
                 });
-
                 ingredientLayout.addView(inputBox);
                 Double selectionCalories = IDao.getCalories(selection);
                 foodCaloriesMap.put(inputBox, selectionCalories);
 
+                final TextView ingredientUnit = new TextView(getApplicationContext());
+                ingredientUnit.setText(IDao.getByName(selection).get(0).iportion + "s");
+                ingredientLayout.addView(ingredientUnit);
+
                 eatLayout.addView(ingredientLayout);
+
+
             }
 
             @Override
