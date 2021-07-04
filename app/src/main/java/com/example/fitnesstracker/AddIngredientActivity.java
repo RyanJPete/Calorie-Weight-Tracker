@@ -59,15 +59,18 @@ public class AddIngredientActivity extends AppCompatActivity
             int grams;
             IngredientStats newEntry = new IngredientStats();
 
-            inputTxt = findViewById(R.id.gramsTxt);
-            grams = Integer.parseInt(inputTxt.getText().toString());
+
 
             inputTxt = findViewById(R.id.nameTxt);
             for(int x = 0; x < ingredientList.size(); ++x){
                 if(ingredientList.get(x).iname.matches(inputTxt.getText().toString())){
-                    FragmentManager fm = getSupportFragmentManager();
-                    DialogFragment dub = new checkDoubleEntry();
-                    dub.show(fm, "VerifyDoubleup");
+                    try {
+                        FragmentManager fm = getSupportFragmentManager();
+                        DialogFragment dub = new checkDoubleEntry();
+                        dub.show(fm, "VerifyDoubleup");
+                    } catch (Exception e){
+                        System.out.print(e);
+                    }
                     return;
                 }
             }
@@ -75,7 +78,8 @@ public class AddIngredientActivity extends AppCompatActivity
             if (inputTxt.getText().toString().matches("")) {
                 return;
             }
-
+            inputTxt = findViewById(R.id.gramsTxt);
+            grams = Integer.parseInt(inputTxt.getText().toString());
             inputTxt = findViewById(R.id.nameTxt);
             newEntry.iname = inputTxt.getText().toString();
             inputTxt = findViewById(R.id.calorieTxt);
@@ -116,7 +120,8 @@ public class AddIngredientActivity extends AppCompatActivity
         newEntry.iprotein = Double.parseDouble(inputTxt.getText().toString()) / grams;
         inputTxt = findViewById(R.id.portionText);
         newEntry.iportion = inputTxt.getText().toString();
-        IDao.insertIngredient(newEntry);
+        newEntry.key = IDao.getKeyByName(newEntry.iname);
+        IDao.updateIngredient(newEntry);
 
         addBtn.setText("Reset?");
     }

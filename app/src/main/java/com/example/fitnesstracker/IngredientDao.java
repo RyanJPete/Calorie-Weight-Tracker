@@ -24,6 +24,9 @@ public interface IngredientDao {
     @Query(("SELECT * FROM ingredientstats WHERE ingredientstats.name =:name"))
     List<IngredientStats> getByName(String name);
 
+    @Query(("SELECT `key` FROM ingredientstats WHERE ingredientstats.name =:name"))
+    int getKeyByName(String name);
+
     @Insert
     void insertAll(IngredientStats... istat);
 
