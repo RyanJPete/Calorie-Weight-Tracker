@@ -1,23 +1,28 @@
 package com.example.fitnesstracker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
 
-public class AddMealActivity extends AppCompatActivity {
+public class AddMealActivity extends AppCompatActivity
+                                implements checkDoubleEntry.checkDoubleEntryListener{
     AppDatabase db;
     DateDao DDao;
     IngredientDao IDao;
@@ -85,7 +90,7 @@ public class AddMealActivity extends AppCompatActivity {
         });
     }
 
-    public void addMeal(View view){
+    public MealStats makeMeal(){
         LinearLayout mealLayout = findViewById(R.id.mealLayout);
         int count = mealLayout.getChildCount();
         LinearLayout v = null;
@@ -110,6 +115,60 @@ public class AddMealActivity extends AppCompatActivity {
             newMeal.ingredientList.add(newIngredient);
             newMeal.defaultQty.add(Double.parseDouble(ingredientQTY.getText().toString())/portionCount);
         }
+        return newMeal;
+    }
+
+    public void resetLayout(){
+        LinearLayout mealLayout = findViewById(R.id.mealLayout);
+        mealLayout.removeAllViews();
+    }
+
+    public void addMeal(View view){
+        Button addBtn = findViewById(R.id.addMealBtn);
+        TextView inputTxt;
+        inputTxt = findViewById(R.id.mealNameInput);
+        TextView portionTxt = findViewById(R.id.portionNumInput);
+
+        if(addBtn.getText().toString().equals("Reset?")){
+            resetLayout();
+            inputTxt.setText("");
+            portionTxt.setText("1");
+        } else {
+            //check for existing name
+            ArrayList<MealStats> mealList = (ArrayList<MealStats>) MDao.getAll();
+
+            for(int x = 0; x < mealList.size(); ++x){
+                if(mealList.get(x).mname.matches(inputTxt.getText().toString())){
+                    try {
+                        FragmentManager fm = getSupportFragmentManager();
+                        DialogFragment dub = new checkDoubleEntry();
+                        dub.show(fm, "VerifyDoubleup");
+                    } catch (Exception e){
+                        System.out.print(e);
+                    }
+                    return;
+                }
+            }
+
+            MealStats newMeal = makeMeal();
             MDao.insertMeal(newMeal);
+        }
+    }
+
+    public void onDialogPositiveClick(DialogFragment dialog){
+        TextView inputTxt = findViewById(R.id.gramsTxt);
+        IngredientStats newEntry = new IngredientStats();
+        Button addBtn = findViewById(R.id.addMealBtn);
+
+
+        //Create Meal
+        MealStats newMeal = makeMeal();
+        newMeal.key = MDao.GetKeyByName(newMeal.mname);
+        MDao.updateMeal(newMeal);
+
+        addBtn.setText("Reset?");
+    }
+    public void onDialogNegativeClick(DialogFragment dialog){
+
     }
 }

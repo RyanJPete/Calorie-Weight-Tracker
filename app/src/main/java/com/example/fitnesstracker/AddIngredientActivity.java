@@ -107,7 +107,7 @@ public class AddIngredientActivity extends AppCompatActivity
         IngredientStats newEntry = new IngredientStats();
         Button addBtn = findViewById(R.id.addIngredientBtn);
 
-
+        //Create Ingredient
         inputTxt = findViewById(R.id.nameTxt);
         newEntry.iname = inputTxt.getText().toString();
         inputTxt = findViewById(R.id.calorieTxt);

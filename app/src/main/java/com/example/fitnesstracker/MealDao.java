@@ -21,6 +21,9 @@ public interface MealDao {
     @Query("SELECT * FROM mealstats WHERE mealstats.name = :name")
     MealStats getByName(String name);
 
+    @Query("SELECT key from mealstats WHERE mealstats.name = :name")
+    int GetKeyByName(String name);
+
     @Insert
     void insertAll(MealStats... mstat);
 
