@@ -121,6 +121,8 @@ public class AddMealActivity extends AppCompatActivity
     public void resetLayout(){
         LinearLayout mealLayout = findViewById(R.id.mealLayout);
         mealLayout.removeAllViews();
+        Spinner ingredientPicker = findViewById(R.id.ingredientDropdownMeal);
+        setupIngredientSpinner();
     }
 
     public void addMeal(View view){
@@ -133,6 +135,8 @@ public class AddMealActivity extends AppCompatActivity
             resetLayout();
             inputTxt.setText("");
             portionTxt.setText("1");
+            addBtn.setText("ADD MEAL");
+
         } else {
             //check for existing name
             ArrayList<MealStats> mealList = (ArrayList<MealStats>) MDao.getAll();
@@ -152,6 +156,7 @@ public class AddMealActivity extends AppCompatActivity
 
             MealStats newMeal = makeMeal();
             MDao.insertMeal(newMeal);
+            addBtn.setText("Reset?");
         }
     }
 
@@ -166,7 +171,7 @@ public class AddMealActivity extends AppCompatActivity
         newMeal.key = MDao.GetKeyByName(newMeal.mname);
         MDao.updateMeal(newMeal);
 
-        addBtn.setText("Reset?");
+
     }
     public void onDialogNegativeClick(DialogFragment dialog){
 
