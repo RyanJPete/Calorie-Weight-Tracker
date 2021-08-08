@@ -39,7 +39,25 @@ public class EatActivity extends AppCompatActivity {
     MealDao MDao;
     IngredientDao IDao;
     Map<EditText, Double> foodCaloriesMap;  //input box and calorie per qty
+    Map<EditText, macro> macroMap; //input box and macros per qty
     InputMethodManager imm;
+    double totalFat;
+    double totalCarbs;
+    double totalProtein;
+
+    private class macro{
+      double calories;
+      double fat;
+      double carbs;
+      double protein;
+
+      macro(double ical, double ifat, double icarb, double ipro){
+          calories = ical;
+          fat = ifat;
+          carbs = icarb;
+          protein = ipro;
+      }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +69,17 @@ public class EatActivity extends AppCompatActivity {
         IDao = db.IngredientStats();
         MDao = db.MealStats();
         foodCaloriesMap = new HashMap<EditText, Double>();
+        macroMap = new HashMap<EditText, macro>();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        totalFat = 0;
+        totalCarbs = 0;
+        totalProtein = 0;
 
         setupIngredientSpinner();
         setupMealSpinner();
     }
 
-    private void addCalories(){
+    private void addCalories(){     //TODO Combine addCalories and calculateMacros
         double totalCalories = 0;
         TextView calorieSumText = findViewById(R.id.totalCalories);
 
@@ -74,6 +96,20 @@ public class EatActivity extends AppCompatActivity {
         calorieSumText.setText(Double.toString(totalCalories));
     }
 
+    private void calculateMacros(){
+        for(Map.Entry<EditText, macro> textEntry : macroMap.entrySet()){
+            macro curMacro = textEntry.getValue();
+            double qty = 0;
+            String temp = textEntry.getKey().getText().toString();
+            if(!temp.equals("")){
+                qty = Double.parseDouble(temp);
+                totalFat += qty * curMacro.fat;
+                totalCarbs+= qty * curMacro.carbs;
+                totalProtein += qty * curMacro.protein;
+            }
+        }
+    }
+
     private boolean addCaloriesBtn(View v, int keyCode, KeyEvent event, String iName, EditText inputBox) {
         if ((event.getAction() == KeyEvent.ACTION_UP && keyCode != KEYCODE_ENTER) && keyCode != KEYCODE_BACK) {
            /* TextView totalCalories = findViewById(R.id.totalCalories);
@@ -82,6 +118,7 @@ public class EatActivity extends AppCompatActivity {
             newCalories += Double.parseDouble(inputBox.getText().toString())*temping.icalories;
             totalCalories.setText(Double.toString(newCalories));*/
             addCalories();
+
 
             return true;
         }
@@ -149,6 +186,9 @@ public class EatActivity extends AppCompatActivity {
                     ingredientLayout.addView(inputBox);
                     double selectionCalories = IDao.getCalories(iName);
                     foodCaloriesMap.put(inputBox, selectionCalories);
+                    macro selectionMacros = new macro(IDao.getCalories(iName), IDao.getFat(iName),
+                            IDao.getCarbs(iName), IDao.getProtein(iName));
+                    macroMap.put(inputBox, selectionMacros);
 
                     final String iPortion = ingredientList.get(x).iportion + "s";
                     final TextView ingredientUnit = new TextView(getApplicationContext());
@@ -219,6 +259,9 @@ public class EatActivity extends AppCompatActivity {
                 ingredientLayout.addView(inputBox);
                 Double selectionCalories = IDao.getCalories(selection);
                 foodCaloriesMap.put(inputBox, selectionCalories);
+                macro selectionMacros = new macro(IDao.getCalories(selection), IDao.getFat(selection),
+                        IDao.getCarbs(selection), IDao.getProtein(selection));
+                macroMap.put(inputBox, selectionMacros);
 
                 final TextView ingredientUnit = new TextView(getApplicationContext());
                 ingredientUnit.setText(IDao.getByName(selection).get(0).iportion + "s");
@@ -242,23 +285,28 @@ public class EatActivity extends AppCompatActivity {
         DateTime dT = DateTime.now();
         int dayOfWeek = dT.getDayOfWeek();
         int today = dT.getMonthOfYear() * 1000000 + dT.getDayOfMonth() * 10000 + dT.getYear();
-        double caloriesEntered = DDao.getDateCalories(today);
-        int weightEntered = DDao.getDateWeight(today);
-        DayStats newEntry = new DayStats();
-        newEntry.DayOfWeek = dayOfWeek;
-        newEntry.DayDate = today;
-        newEntry.DayWeight = weightEntered;
-        newEntry.DayCalories = Double.parseDouble(txt.getText().toString()) + caloriesEntered;
-        newEntry.DayFat = 0.0;
-        newEntry.DayCarbs = 0.0;
-        newEntry.DayProtein = 0.0;
+        double currentCalories = DDao.getDateCalories(today);
+        int currentWeight = DDao.getDateWeight(today);
+        calculateMacros();
 
-        if (caloriesEntered == 0 && weightEntered == 0) {  //No entry has been made for today
+
+        if (currentCalories == 0 && currentWeight == 0) {  //No entry has been made for today
+            DayStats newEntry = new DayStats();
+            newEntry.DayOfWeek = dayOfWeek;
+            newEntry.DayDate = today;
+            newEntry.DayWeight = currentWeight;
+            newEntry.DayCalories = Double.parseDouble(txt.getText().toString()) + currentCalories;
+            newEntry.DayFat = totalFat;
+            newEntry.DayCarbs = totalCarbs;
+            newEntry.DayProtein = totalProtein;
             DDao.insertWeight(newEntry);
         } else {  //an entry has been made for today
-            newEntry.Fdate = DDao.getDateKey(today);
-
-            DDao.updateNutrition(Double.parseDouble(txt.getText().toString()) + caloriesEntered, 0, 0, 0, today);
+            //newEntry.Fdate = DDao.getDateKey(today);
+            totalFat += DDao.getDateFat(today);
+            totalCarbs += DDao.getDateCarbs(today);
+            totalProtein += DDao.getDateProtein(today);
+            DDao.updateNutrition(Double.parseDouble(txt.getText().toString()) + currentCalories,
+                    totalFat, totalCarbs, totalProtein, today);
         }
     }
 }

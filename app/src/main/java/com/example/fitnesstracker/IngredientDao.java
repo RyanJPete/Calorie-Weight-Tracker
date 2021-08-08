@@ -21,6 +21,15 @@ public interface IngredientDao {
     @Query(("SELECT calories FROM ingredientstats WHERE ingredientstats.name =:name"))
     double getCalories(String name);
 
+    @Query(("SELECT fat FROM ingredientstats WHERE ingredientstats.name =:name"))
+    double getFat(String name);
+
+    @Query(("SELECT carbs FROM ingredientstats WHERE ingredientstats.name =:name"))
+    double getCarbs(String name);
+
+    @Query(("SELECT protein FROM ingredientstats WHERE ingredientstats.name =:name"))
+    double getProtein(String name);
+
     @Query(("SELECT * FROM ingredientstats WHERE ingredientstats.name =:name"))
     List<IngredientStats> getByName(String name);
 
